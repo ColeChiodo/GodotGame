@@ -140,19 +140,19 @@ func _basic_atk():
 	if curr_combo == 0:
 		animation_player.play("atk1")
 		animator.play("atk1")
-		await get_tree().create_timer(.45).timeout
+		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 1:
 		animation_player.play("atk2")
 		animator.play("atk2")
-		await get_tree().create_timer(.35).timeout
+		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 2:
 		animation_player.play("atk3")
 		animator.play("atk3")
-		await get_tree().create_timer(.75).timeout
+		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
 		animation_player.play("atk4")
 		animator.play("atk4")
-		await get_tree().create_timer(.35).timeout
+		await get_tree().create_timer(.3).timeout
 	curr_combo += 1
 	if curr_combo == max_combo:
 		curr_combo = 0
@@ -178,4 +178,5 @@ func _on_dash_timer_timeout():
 	can_dash = true
 
 func _on_animation_player_animation_finished(anim_name):
+	print(anim_name + " finished")
 	curr_combo = 0

@@ -62,16 +62,13 @@ surface_material_override/0 = SubResource("StandardMaterial3D_pwaoo")
 [node name="Player" parent="." instance=ExtResource("1_j8vrb")]
 
 [node name="Test_Enemy" parent="." instance=ExtResource("4_uxpyf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.23379, 0, 2.32422)
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 8.5643, 0, 0.6773)
 
 [node name="Test_Enemy2" parent="." instance=ExtResource("4_uxpyf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.72169, 0, -6.26418)
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 7.53104, 0, -6.13663)
 
 [node name="Test_Enemy3" parent="." instance=ExtResource("4_uxpyf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.28482, 0, 6.91017)
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, -3.06393, 0, -7.33605)
 
 [node name="Test_Enemy4" parent="." instance=ExtResource("4_uxpyf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.72091, 0, -4.36631)
-
-[node name="Test_Enemy5" parent="." instance=ExtResource("4_uxpyf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.18949, 0, 5.51731)
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, -8.63011, -9.53674e-07, -1.41031)

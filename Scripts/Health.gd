@@ -21,6 +21,8 @@ func _ready():
 func _dmg(attack : Attack):
 	hp -= attack.atk_dmg
 	print(str(owner.name) + " has been hit.\nHP: " + str(hp))
+	if parent.has_method("_hit"):
+		parent._hit(attack)
 	if hp <= 0:
 		parent._die()
 		

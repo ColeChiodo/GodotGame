@@ -114,6 +114,8 @@ func _physics_process(delta):
 				animator.play("walk")
 			else:
 				animator.play("run")
+		elif dashing:
+			animator.play("dash")
 	else:
 		if sprinting:
 			sprinting = false
@@ -126,7 +128,6 @@ func _physics_process(delta):
 	
 func _dash():
 	$Dash_Timer.start()
-	animator.play("dash")
 	sprinting = false
 	can_sprint = false
 	dashing = true
@@ -140,11 +141,11 @@ func _basic_atk():
 	if curr_combo == 0:
 		animation_player.play("atk1")
 		animator.play("atk1")
-		await get_tree().create_timer(.4).timeout
+		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 1:
 		animation_player.play("atk2")
 		animator.play("atk2")
-		await get_tree().create_timer(.3).timeout
+		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
 		animation_player.play("atk3")
 		animator.play("atk3")
@@ -152,7 +153,7 @@ func _basic_atk():
 	elif curr_combo == 3:
 		animation_player.play("atk4")
 		animator.play("atk4")
-		await get_tree().create_timer(.3).timeout
+		await get_tree().create_timer(.8).timeout
 	curr_combo += 1
 	if curr_combo == max_combo:
 		curr_combo = 0

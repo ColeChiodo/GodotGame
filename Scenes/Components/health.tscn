@@ -2,5 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Health.gd" id="1_hig4l"]
 
-[node name="Health" type="Node"]
+[node name="Health" type="Node3D"]
 script = ExtResource("1_hig4l")
+
+[node name="Origin" type="Node3D" parent="."]

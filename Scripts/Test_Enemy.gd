@@ -3,8 +3,6 @@ extends Node3D
 @onready var animation_player = $AnimationPlayer
 @onready var animator = $AnimatedSprite3D
 
-
-
 # States
 var stunned = false
 
@@ -13,12 +11,13 @@ func _process(_delta):
 		animator.play("idle")
 		animator.modulate = Color(1, 1, 1)
 	elif stunned:
-		animator.modulate = Color(1, 0, 0)
+		animator.modulate = Color(.5, .5, .5)
 
 func _die():
 	animation_player.play("die")
 	
 func _hit(attack : Attack):
+	animator.stop()
 	animator.play("hit")
 	stunned = true
 	$Stun_Timer.wait_time = attack.atk_stun

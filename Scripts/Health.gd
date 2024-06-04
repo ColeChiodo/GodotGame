@@ -1,6 +1,8 @@
 extends Node
 class_name Health
 
+@onready var origin = $Origin
+
 @export var max_health = 20.0
 var hp : float
 
@@ -20,6 +22,7 @@ func _ready():
 	
 func _dmg(attack : Attack):
 	hp -= attack.atk_dmg
+	DamageNumbers.display_number(attack.atk_dmg, origin.global_position, false)
 	print(str(owner.name) + " has been hit.\nHP: " + str(hp))
 	if parent.has_method("_hit"):
 		parent._hit(attack)

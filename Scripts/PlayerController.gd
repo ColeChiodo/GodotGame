@@ -36,6 +36,8 @@ var dt_up = false
 var dt_down = false
 
 func _physics_process(delta):
+	if dashing: 
+		animator.play("dash")
 		
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -114,8 +116,7 @@ func _physics_process(delta):
 				animator.play("walk")
 			else:
 				animator.play("run")
-		elif dashing:
-			animator.play("dash")
+			
 	else:
 		if sprinting:
 			sprinting = false
@@ -132,7 +133,7 @@ func _dash():
 	can_sprint = false
 	dashing = true
 	can_dash = false
-	dash_mult = 5
+	dash_mult = 6.5
 	
 func _basic_atk():
 	attacking = true
@@ -179,5 +180,4 @@ func _on_dash_timer_timeout():
 	can_dash = true
 
 func _on_animation_player_animation_finished(anim_name):
-	print(anim_name + " finished")
 	curr_combo = 0

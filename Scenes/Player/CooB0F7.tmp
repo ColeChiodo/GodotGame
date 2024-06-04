@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cytlas36fc0np"]
+
+[ext_resource type="Script" path="res://Scripts/Cooldowns.gd" id="1_yqglk"]
+
+[node name="Cooldowns" type="Node"]
+script = ExtResource("1_yqglk")
+
+[node name="Dash" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Dash" to="." method="_on_dash_timeout"]

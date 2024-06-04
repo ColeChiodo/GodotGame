@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://n0m5mbljm4jn"]
+
+[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="1_a1qb2"]
+[ext_resource type="Script" path="res://Scripts/Test_Enemy.gd" id="1_g1f5d"]
+[ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="1_yfb20"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_87met"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_78lp2"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pow1i"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="Animation" id="Animation_p16mr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_aavi5"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nr3ou"]
+_data = {
+"RESET": SubResource("Animation_p16mr"),
+"die": SubResource("Animation_aavi5")
+}
+
+[node name="Test_Enemy" type="CharacterBody3D"]
+script = ExtResource("1_g1f5d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_87met")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_78lp2")
+skeleton = NodePath("")
+
+[node name="Health" parent="." instance=ExtResource("1_yfb20")]
+max_health = 1.0
+
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_a1qb2")
+health = NodePath("../Health")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_pow1i")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nr3ou")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

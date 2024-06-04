@@ -62,4 +62,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_pwaoo")
 [node name="Player" parent="." instance=ExtResource("1_j8vrb")]
 
 [node name="Test_Enemy" parent="." instance=ExtResource("4_uxpyf")]
-transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 4.33241, 9.53674e-07, -0.290941)
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 3.67925, 9.53674e-07, 0.00858212)
+
+[node name="Test_Enemy2" parent="." instance=ExtResource("4_uxpyf")]
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, -3.37109, -4.76837e-07, -0.0355358)
+
+[node name="Test_Enemy3" parent="." instance=ExtResource("4_uxpyf")]
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 5.01337, -9.53674e-07, -0.0161726)

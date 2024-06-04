@@ -3,6 +3,7 @@ extends CharacterBody3D
 @onready var animator = $AnimatedSprite3D
 @onready var animation_player = $AnimationPlayer
 @onready var hitbox = $Area3D
+@onready var attack = $Attack
 
 const SPEED = 5.0
 const DASH = 800
@@ -140,18 +141,22 @@ func _basic_atk():
 	can_attack = false
 	
 	if curr_combo == 0:
+		attack.set_attack(2, 0, .75, hitbox.transform.origin)
 		animation_player.play("atk1")
 		animator.play("atk1")
 		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 1:
+		attack.set_attack(3, 0, .75, hitbox.transform.origin)
 		animation_player.play("atk2")
 		animator.play("atk2")
 		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
+		attack.set_attack(5, 0, .75, hitbox.transform.origin)
 		animation_player.play("atk3")
 		animator.play("atk3")
 		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
+		attack.set_attack(4, 0, .75, hitbox.transform.origin)
 		animation_player.play("atk4")
 		animator.play("atk4")
 		await get_tree().create_timer(.8).timeout

@@ -9,7 +9,7 @@ func _init():
 
 func _dmg(attack : Attack):
 	if health:
-		Engine.time_scale = .1
 		health._dmg(attack)
+		Engine.time_scale = .1
 		await get_tree().create_timer(.015).timeout
 		Engine.time_scale = 1

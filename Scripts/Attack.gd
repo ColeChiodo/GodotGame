@@ -1,10 +1,11 @@
 extends Node
 class_name Attack
 
-@export var atk_dmg : float
-@export var knockback : float
-@export var atk_pos : Vector3
-@export var atk_stun : float
+var atk_dmg : float
+var knockback : float
+var atk_pos : Vector3
+var atk_stun : float
+@export var crit_chance : float
 
 func set_attack(dmg : float, kb : float, stun : float, pos : Vector3):
 	atk_dmg = dmg

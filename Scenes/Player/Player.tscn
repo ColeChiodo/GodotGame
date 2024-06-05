@@ -17,7 +17,7 @@
 [ext_resource type="Script" path="res://Scripts/Attack.gd" id="11_hto1p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
-size = Vector3(1, 2, 0.25)
+size = Vector3(1, 2, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_c0aee"]
 size = Vector3(1, 2, 1)
@@ -616,11 +616,12 @@ wait_time = 0.05
 one_shot = true
 
 [node name="Health" parent="." instance=ExtResource("9_rihh1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39811, 0)
+max_health = 40.0
 
 [node name="Attack" type="Node" parent="."]
 script = ExtResource("11_hto1p")
-atk_dmg = 10.0
-atk_stun = 0.75
+crit_chance = 50.0
 
 [node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("attack")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)

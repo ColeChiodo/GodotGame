@@ -141,7 +141,7 @@ func _basic_atk():
 	can_attack = false
 	
 	if curr_combo == 0:
-		attack.set_attack(2, 0, .75, hitbox.transform.origin)
+		attack.set_attack(2, 0, .45, hitbox.transform.origin)
 		animation_player.play("atk1")
 		animator.play("atk1")
 		await get_tree().create_timer(.3).timeout
@@ -151,12 +151,12 @@ func _basic_atk():
 		animator.play("atk2")
 		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
-		attack.set_attack(5, 0, .75, hitbox.transform.origin)
+		attack.set_attack(5, 0, .85, hitbox.transform.origin)
 		animation_player.play("atk3")
 		animator.play("atk3")
 		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
-		attack.set_attack(4, 0, .75, hitbox.transform.origin)
+		attack.set_attack(4, 0, .5, hitbox.transform.origin)
 		animation_player.play("atk4")
 		animator.play("atk4")
 		await get_tree().create_timer(.8).timeout
@@ -184,5 +184,5 @@ func _on_dash_timer_timeout():
 	await get_tree().create_timer(dash_cd).timeout
 	can_dash = true
 
-func _on_animation_player_animation_finished(anim_name):
+func _on_animation_player_animation_finished(_anim_name):
 	curr_combo = 0

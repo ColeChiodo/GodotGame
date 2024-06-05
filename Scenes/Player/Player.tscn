@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=95 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -12,7 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://751wwmaekjhh" path="res://Assets/Art/Characters/temp_Knight_player/Walking_KG_2.png" id="3_vxfj7"]
 [ext_resource type="Texture2D" uid="uid://d0uqhh3n5020l" path="res://Assets/Art/Characters/temp_Knight_player/Attack_KG_3.png" id="4_foi0b"]
 [ext_resource type="Texture2D" uid="uid://xl3dglnbhoe0" path="res://Assets/Art/Characters/temp_Knight_player/Attack_KG_4.png" id="5_tuxvv"]
+[ext_resource type="Texture2D" uid="uid://dgww04jgrs10d" path="res://Assets/Art/Characters/temp_Knight_player/Shield_idle_KG.png" id="6_xu3wd"]
 [ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="9_rihh1"]
+[ext_resource type="Texture2D" uid="uid://bs5mo3nun1e2l" path="res://Assets/Art/Characters/temp_Knight_player/Hurt_KG_1.png" id="10_8qdbi"]
 [ext_resource type="Script" path="res://Scripts/Hitbox.gd" id="11_g4awm"]
 [ext_resource type="Script" path="res://Scripts/Attack.gd" id="11_hto1p"]
 
@@ -126,6 +128,22 @@ region = Rect2(300, 0, 100, 64)
 atlas = ExtResource("5_tuxvv")
 region = Rect2(400, 0, 100, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4u48"]
+atlas = ExtResource("6_xu3wd")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7esa"]
+atlas = ExtResource("6_xu3wd")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hx8pd"]
+atlas = ExtResource("6_xu3wd")
+region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mf8a"]
+atlas = ExtResource("6_xu3wd")
+region = Rect2(300, 0, 100, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6a6x6"]
 atlas = ExtResource("2_7in6o")
 region = Rect2(0, 0, 100, 64)
@@ -161,6 +179,22 @@ region = Rect2(100, 0, 100, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_x5tr5"]
 atlas = ExtResource("2_wrt0f")
 region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6msod"]
+atlas = ExtResource("10_8qdbi")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2v26b"]
+atlas = ExtResource("10_8qdbi")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwg78"]
+atlas = ExtResource("10_8qdbi")
+region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbjwm"]
+atlas = ExtResource("10_8qdbi")
+region = Rect2(300, 0, 100, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6xrix"]
 atlas = ExtResource("2_6vj8q")
@@ -359,6 +393,23 @@ animations = [{
 "speed": 10.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4u48")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7esa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hx8pd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mf8a")
+}],
+"loop": true,
+"name": &"block",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 999.0,
 "texture": SubResource("AtlasTexture_6a6x6")
 }],
@@ -398,6 +449,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6msod")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2v26b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwg78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbjwm")
+}],
+"loop": true,
+"name": &"hit",
 "speed": 5.0
 }, {
 "frames": [{
@@ -521,7 +589,7 @@ tracks/0/path = NodePath("Area3D:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.5),
+"times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -553,7 +621,7 @@ tracks/0/path = NodePath("Area3D:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.9),
+"times": PackedFloat32Array(0, 0.5, 0.7),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -604,7 +672,7 @@ offset = Vector2(0, 32)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"atk4"
+animation = &"hit"
 autoplay = "idle"
 
 [node name="DT_Timer" type="Timer" parent="."]
@@ -639,7 +707,11 @@ libraries = {
 "": SubResource("AnimationLibrary_jn2aw")
 }
 
+[node name="Stun_Timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="DT_Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Dash_Timer" to="." method="_on_dash_timer_timeout"]
 [connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Stun_Timer" to="." method="_on_stun_timer_timeout"]

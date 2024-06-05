@@ -13,9 +13,10 @@ func _process(_delta):
 		if Input.is_action_just_pressed("debug_take_dmg"):
 			var attack = Attack.new()
 			attack.atk_dmg = 1
-			attack.knockback = 0
-			attack.atk_pos = get_parent().global_transform.origin
-			attack.crit_chance = 0
+			attack.knockback = 20
+			attack.atk_pos = -1
+			attack.crit_chance = 50
+			attack.atk_stun = .75
 			_dmg(attack)
 		if Input.is_action_just_pressed("debug_heal"):
 			_heal(1)
@@ -24,6 +25,12 @@ func _ready():
 	hp = max_health
 	
 func _dmg(attack : Attack):
+	if owner.has_method("_blocking"):
+		if owner._blocking(attack):
+			if owner.has_method("_knockback"):
+				owner._knockback(attack)
+			return
+	
 	var crit = false
 	var random : float = (randi() % 1000) / 10.0
 	if random <= attack.crit_chance:

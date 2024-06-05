@@ -135,7 +135,7 @@ animations = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pow1i"]
-size = Vector3(1.14368, 1.15918, 1)
+size = Vector3(0.697021, 1.15918, 1)
 
 [sub_resource type="Animation" id="Animation_p16mr"]
 length = 0.001
@@ -173,7 +173,7 @@ _data = {
 "die": SubResource("Animation_aavi5")
 }
 
-[node name="Test_Enemy" type="CharacterBody3D"]
+[node name="Training_Dummy" type="CharacterBody3D"]
 transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 0, 0, 0)
 collision_layer = 4
 script = ExtResource("1_g1f5d")

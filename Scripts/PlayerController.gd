@@ -13,6 +13,8 @@ var gravity = 20
 var max_combo = 4
 var curr_combo = 0
 
+var x_dir = 1
+
 # States
 var dead = false
 
@@ -30,6 +32,8 @@ var can_dash = true
 var dash_mult = 1.0
 var dash_cd = .3
 
+var blocking = false
+
 # Double tap direction to dash
 var dt_left = false
 var dt_right = false
@@ -37,15 +41,25 @@ var dt_up = false
 var dt_down = false
 
 func _physics_process(delta):
-	if dashing: 
-		animator.play("dash")
-		
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		
 	if dead or stunned:
 		return
-		
+	
+	# Handle blocking
+	if Input.is_action_just_pressed("player_block") and is_on_floor() and not dashing and not attacking:
+		animator.play("block")
+		blocking = true
+	
+	if Input.is_action_just_released("player_block"):
+		blocking = false
+		velocity.x = 0
+	
+	if blocking:
+		return
+	
+	# Handle basic attack
 	if Input.is_action_just_pressed("attack_basic") and is_on_floor() and not dashing:
 		if sprinting:
 			sprinting = false
@@ -85,9 +99,11 @@ func _physics_process(delta):
 	if direction.x > 0:
 		$AnimatedSprite3D.flip_h = false
 		hitbox.transform.origin.x = 1
+		x_dir = 1
 	elif direction.x < 0:
 		$AnimatedSprite3D.flip_h = true
 		hitbox.transform.origin.x = -1
+		x_dir = -1
 
 	if(Input.is_action_just_pressed("move_right")):
 		if dt_right and can_sprint:
@@ -111,7 +127,7 @@ func _physics_process(delta):
 	
 	if direction:
 		velocity.x = direction.x * SPEED * sprint_mult
-		velocity.z = direction.z * SPEED * sprint_mult * dash_mult # * 1.5
+		velocity.z = direction.z * SPEED * sprint_mult * dash_mult
 		if is_on_floor() and not dashing:
 			if not sprinting:
 				animator.play("walk")
@@ -141,22 +157,22 @@ func _basic_atk():
 	can_attack = false
 	
 	if curr_combo == 0:
-		attack.set_attack(2, 0, .45, hitbox.transform.origin)
+		attack.set_attack(2, 5, .45, x_dir)
 		animation_player.play("atk1")
 		animator.play("atk1")
 		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 1:
-		attack.set_attack(3, 0, .75, hitbox.transform.origin)
+		attack.set_attack(3, 5, .75, x_dir)
 		animation_player.play("atk2")
 		animator.play("atk2")
 		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
-		attack.set_attack(5, 0, .85, hitbox.transform.origin)
+		attack.set_attack(5, 10, .85, x_dir)
 		animation_player.play("atk3")
 		animator.play("atk3")
 		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
-		attack.set_attack(4, 0, .5, hitbox.transform.origin)
+		attack.set_attack(4, 10, .5, x_dir)
 		animation_player.play("atk4")
 		animator.play("atk4")
 		await get_tree().create_timer(.8).timeout
@@ -170,6 +186,22 @@ func _basic_atk():
 func _die():
 	dead = true
 	animator.play("death")
+
+func _hit(attack : Attack):
+	if dead: return
+	animator.stop()
+	animator.play("hit")
+	stunned = true
+	blocking = false
+	$Stun_Timer.wait_time = attack.atk_stun
+	$Stun_Timer.start()
+	
+func _knockback(attack : Attack):
+	velocity.x = attack.atk_pos * attack.knockback
+	await move_and_slide()
+	
+func _blocking(attack : Attack):
+	return blocking if attack.atk_pos != x_dir else false
 
 func _on_timer_timeout():
 	dt_down = false
@@ -186,3 +218,6 @@ func _on_dash_timer_timeout():
 
 func _on_animation_player_animation_finished(_anim_name):
 	curr_combo = 0
+
+func _on_stun_timer_timeout():
+	stunned = false

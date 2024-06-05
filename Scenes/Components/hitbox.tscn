@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://ca864t0frv6pf"]
+[gd_scene load_steps=2 format=3 uid="uid://bxcmk5rwcpf0a"]
 
-[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="1_klb7s"]
+[ext_resource type="Script" path="res://Scripts/Hitbox.gd" id="1_5sqcd"]
 
-[node name="Hitbox" type="Area3D" node_paths=PackedStringArray("health")]
-script = ExtResource("1_klb7s")
-health = NodePath("")
+[node name="Hitbox" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_5sqcd")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

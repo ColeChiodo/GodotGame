@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=103 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -15,8 +15,11 @@
 [ext_resource type="Texture2D" uid="uid://dgww04jgrs10d" path="res://Assets/Art/Characters/temp_Knight_player/Shield_idle_KG.png" id="6_xu3wd"]
 [ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="9_rihh1"]
 [ext_resource type="Texture2D" uid="uid://bs5mo3nun1e2l" path="res://Assets/Art/Characters/temp_Knight_player/Hurt_KG_1.png" id="10_8qdbi"]
-[ext_resource type="Script" path="res://Scripts/Hitbox.gd" id="11_g4awm"]
-[ext_resource type="Script" path="res://Scripts/Attack.gd" id="11_hto1p"]
+[ext_resource type="Texture2D" uid="uid://duu43d8pyas2" path="res://Assets/Art/Characters/temp_Knight_player/Shield_Bash_KG.png" id="14_bl8uw"]
+[ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="17_dbtqv"]
+[ext_resource type="Script" path="res://Scripts/SpecialSlot.gd" id="19_4vp6n"]
+[ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="20_3trx3"]
+[ext_resource type="PackedScene" uid="uid://dsfh5eadax5yk" path="res://Scenes/Specials/bash.tscn" id="20_cvqaa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
 size = Vector3(1, 2, 1)
@@ -126,6 +129,26 @@ region = Rect2(300, 0, 100, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_54qvl"]
 atlas = ExtResource("5_tuxvv")
+region = Rect2(400, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbs5r"]
+atlas = ExtResource("14_bl8uw")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nu2ku"]
+atlas = ExtResource("14_bl8uw")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23gvd"]
+atlas = ExtResource("14_bl8uw")
+region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8eqqf"]
+atlas = ExtResource("14_bl8uw")
+region = Rect2(300, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixk2d"]
+atlas = ExtResource("14_bl8uw")
 region = Rect2(400, 0, 100, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q4u48"]
@@ -394,6 +417,38 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_mbs5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu2ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbs5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu2ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbs5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu2ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23gvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8eqqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixk2d")
+}],
+"loop": true,
+"name": &"bash",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_q4u48")
 }, {
 "duration": 1.0,
@@ -561,15 +616,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tmsos"]
-size = Vector3(1, 1.5, 1)
-
 [sub_resource type="Animation" id="Animation_bqyfm"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area3D:monitoring")
+tracks/0/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -585,7 +637,7 @@ length = 0.50001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area3D:monitoring")
+tracks/0/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -601,7 +653,7 @@ length = 0.60001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area3D:monitoring")
+tracks/0/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -617,7 +669,7 @@ length = 0.90001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area3D:monitoring")
+tracks/0/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -633,7 +685,7 @@ length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area3D:monitoring")
+tracks/0/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -652,11 +704,14 @@ _data = {
 "atk4": SubResource("Animation_x3j7i")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_cvh00"]
+size = Vector3(1.5, 2, 1)
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 4
 script = ExtResource("1_mgauq")
 
-[node name="Hurtbox" type="CollisionShape3D" parent="."]
+[node name="PhysCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_hustl")
 
@@ -672,46 +727,48 @@ offset = Vector2(0, 32)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"hit"
+animation = &"bash"
 autoplay = "idle"
-
-[node name="DT_Timer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
-
-[node name="Dash_Timer" type="Timer" parent="."]
-wait_time = 0.05
-one_shot = true
-
-[node name="Health" parent="." instance=ExtResource("9_rihh1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39811, 0)
-max_health = 40.0
-
-[node name="Attack" type="Node" parent="."]
-script = ExtResource("11_hto1p")
-crit_chance = 50.0
-
-[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("attack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("11_g4awm")
-attack = NodePath("../Attack")
-
-[node name="HitBox" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_tmsos")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_jn2aw")
 }
 
+[node name="Health" parent="." instance=ExtResource("9_rihh1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39811, 0)
+max_health = 40.0
+
+[node name="BasicAttack" parent="." instance=ExtResource("17_dbtqv")]
+crit_chance = 50.0
+
+[node name="Hitbox" parent="BasicAttack" node_paths=PackedStringArray("attack") instance=ExtResource("20_3trx3")]
+attack = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BasicAttack/Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_cvh00")
+
+[node name="SpecialSlot1" type="Node" parent="." node_paths=PackedStringArray("special")]
+script = ExtResource("19_4vp6n")
+special = NodePath("../All Specials/Bash")
+
 [node name="Stun_Timer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="timeout" from="DT_Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="Dash_Timer" to="." method="_on_dash_timer_timeout"]
-[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
+[node name="Dash_Timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="DT_Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="All Specials" type="Node3D" parent="."]
+
+[node name="Bash" parent="All Specials" instance=ExtResource("20_cvqaa")]
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Stun_Timer" to="." method="_on_stun_timer_timeout"]
+[connection signal="timeout" from="Dash_Timer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DT_Timer" to="." method="_on_timer_timeout"]

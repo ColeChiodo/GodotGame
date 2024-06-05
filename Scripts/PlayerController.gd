@@ -2,8 +2,9 @@ extends CharacterBody3D
 
 @onready var animator = $AnimatedSprite3D
 @onready var animation_player = $AnimationPlayer
-@onready var hitbox = $Area3D
-@onready var attack = $Attack
+@onready var hitbox = $BasicAttack/Hitbox
+@onready var basic_attack = $BasicAttack
+@onready var sp_slot_1 = $SpecialSlot1
 
 const SPEED = 5.0
 const DASH = 800
@@ -13,7 +14,7 @@ var gravity = 20
 var max_combo = 4
 var curr_combo = 0
 
-var x_dir = 1
+@export var x_dir = 1
 
 # States
 var dead = false
@@ -61,11 +62,18 @@ func _physics_process(delta):
 	
 	# Handle basic attack
 	if Input.is_action_just_pressed("attack_basic") and is_on_floor() and not dashing:
-		if sprinting:
-			sprinting = false
 		if can_attack:
+			if sprinting:
+				sprinting = false
 			_basic_atk()
 			
+	
+	if Input.is_action_just_pressed("special_attack_1") and (sp_slot_1.special.can_use_in_air || is_on_floor()) and not dashing:
+		if can_attack:
+			if sprinting:
+				sprinting = false
+			use_special(sp_slot_1.special)
+	
 	if attacking:
 		return
 
@@ -98,7 +106,6 @@ func _physics_process(delta):
 	
 	if direction.x > 0:
 		$AnimatedSprite3D.flip_h = false
-		hitbox.transform.origin.x = 1
 		x_dir = 1
 	elif direction.x < 0:
 		$AnimatedSprite3D.flip_h = true
@@ -157,28 +164,40 @@ func _basic_atk():
 	can_attack = false
 	
 	if curr_combo == 0:
-		attack.set_attack(2, 5, .45, x_dir)
+		basic_attack.set_attack(2, 5, .45, x_dir)
 		animation_player.play("atk1")
 		animator.play("atk1")
 		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 1:
-		attack.set_attack(3, 5, .75, x_dir)
+		basic_attack.set_attack(3, 5, .75, x_dir)
 		animation_player.play("atk2")
 		animator.play("atk2")
 		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
-		attack.set_attack(5, 10, .85, x_dir)
+		basic_attack.set_attack(5, 10, .85, x_dir)
 		animation_player.play("atk3")
 		animator.play("atk3")
 		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
-		attack.set_attack(4, 10, .5, x_dir)
+		basic_attack.set_attack(4, 10, .5, x_dir)
 		animation_player.play("atk4")
 		animator.play("atk4")
 		await get_tree().create_timer(.8).timeout
 	curr_combo += 1
 	if curr_combo == max_combo:
 		curr_combo = 0
+	
+	attacking = false
+	can_attack = true
+
+func use_special(special : Special):
+	attacking = true
+	can_attack = false
+	
+	animator.play(special.anim_name)
+	special.activate()
+	
+	await get_tree().create_timer(special.duration).timeout
 	
 	attacking = false
 	can_attack = true
@@ -198,7 +217,7 @@ func _hit(attack : Attack):
 	
 func _knockback(attack : Attack):
 	velocity.x = attack.atk_pos * attack.knockback
-	await move_and_slide()
+	move_and_slide()
 	
 func _blocking(attack : Attack):
 	return blocking if attack.atk_pos != x_dir else false

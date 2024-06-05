@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca864t0frv6pf"]
+
+[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="1_klb7s"]
+
+[node name="Hitbox" type="Area3D" node_paths=PackedStringArray("health")]
+script = ExtResource("1_klb7s")
+health = NodePath("")

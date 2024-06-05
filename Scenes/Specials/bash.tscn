@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://dsfh5eadax5yk"]
+
+[ext_resource type="Script" path="res://Scripts/Special.gd" id="1_25ugy"]
+[ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="2_dpbmy"]
+[ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="3_qqn1h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qjyqi"]
+size = Vector3(1, 2, 2)
+
+[sub_resource type="Animation" id="Animation_2i6py"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hitbox:monitoring")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_u6825"]
+resource_name = "bash"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hitbox:monitoring")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4p2gg"]
+_data = {
+"RESET": SubResource("Animation_2i6py"),
+"bash": SubResource("Animation_u6825")
+}
+
+[node name="Bash" type="Node3D" node_paths=PackedStringArray("attack", "animation_player")]
+script = ExtResource("1_25ugy")
+attack = NodePath("Attack")
+anim_name = "bash"
+duration = 0.9
+animation_player = NodePath("AnimationPlayer")
+
+[node name="Attack" parent="." instance=ExtResource("2_dpbmy")]
+
+[node name="Hitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("3_qqn1h")]
+monitoring = false
+attack = NodePath("../Attack")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_qjyqi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Attack")
+libraries = {
+"": SubResource("AnimationLibrary_4p2gg")
+}

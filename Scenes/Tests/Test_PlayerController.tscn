@@ -114,3 +114,9 @@ always_block = true
 
 [node name="Training_Dummy2" parent="." instance=ExtResource("4_uxpyf")]
 transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, -3, 0, 0)
+
+[node name="Training_Dummy3" parent="." instance=ExtResource("4_uxpyf")]
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 4, 0, 0)
+
+[node name="Training_Dummy4" parent="." instance=ExtResource("4_uxpyf")]
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 5, 0, 0)

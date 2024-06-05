@@ -178,7 +178,7 @@ transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 0, 0, 0)
 collision_layer = 4
 script = ExtResource("1_g1f5d")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="PhysCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0192871, 0.58046, 0)
 shape = SubResource("BoxShape3D_87met")
 
@@ -201,13 +201,14 @@ autoplay = "idle"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1638, 0)
 max_health = 1000.0
 
-[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("health")]
+[node name="Hurtbox" type="Area3D" parent="Health" node_paths=PackedStringArray("health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1638, 0)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_a1qb2")
-health = NodePath("../Health")
+health = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Health/Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0180054, 0.57959, 0)
 shape = SubResource("BoxShape3D_pow1i")
 

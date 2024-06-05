@@ -7,8 +7,12 @@ func _init():
 	collision_layer = 0
 	collision_mask = 2
 	monitoring = false
+	
+func _physics_process(_delta):
+	transform.origin.x = attack.atk_pos
 
 func _on_area_entered(area : Hurtbox):
+	print("hit")
 	for child in area.get_children():
 		if not area:
 			return

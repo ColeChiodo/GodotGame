@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=103 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -20,8 +20,6 @@
 [ext_resource type="Script" path="res://Scripts/Specials/SpecialSlot.gd" id="19_4vp6n"]
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="20_3trx3"]
 [ext_resource type="PackedScene" uid="uid://dsfh5eadax5yk" path="res://Scenes/Specials/bash.tscn" id="20_cvqaa"]
-[ext_resource type="Script" path="res://Scripts/PlayerStats.gd" id="21_7eo2j"]
-[ext_resource type="Script" path="res://Scripts/CooldownUI.gd" id="22_1hc71"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
 size = Vector3(1, 2, 1)
@@ -697,43 +695,17 @@ tracks/0/keys = {
 "values": [false, true, false, true, false]
 }
 
-[sub_resource type="Animation" id="Animation_dh0ig"]
-resource_name = "invuln"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite3D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jn2aw"]
 _data = {
 "RESET": SubResource("Animation_bqyfm"),
 "atk1": SubResource("Animation_bfs1m"),
 "atk2": SubResource("Animation_jxbyf"),
 "atk3": SubResource("Animation_wq2m8"),
-"atk4": SubResource("Animation_x3j7i"),
-"invuln": SubResource("Animation_dh0ig")
+"atk4": SubResource("Animation_x3j7i")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvh00"]
 size = Vector3(1.5, 2, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_t2ang"]
-font_size = 30
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="GDScript" id="GDScript_52qa5"]
-script/source = "extends Label
-
-"
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 4
@@ -755,16 +727,10 @@ offset = Vector2(0, 32)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"idle"
+animation = &"bash"
 autoplay = "idle"
-frame_progress = 0.956544
 
-[node name="HitboxAnimations" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_jn2aw")
-}
-
-[node name="InvulnAnimations" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_jn2aw")
 }
@@ -774,6 +740,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39811, 0)
 max_health = 40.0
 
 [node name="BasicAttack" parent="." instance=ExtResource("17_dbtqv")]
+crit_chance = 50.0
 
 [node name="Hitbox" parent="BasicAttack" node_paths=PackedStringArray("attack") instance=ExtResource("20_3trx3")]
 attack = NodePath("..")
@@ -797,49 +764,11 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
-[node name="Special1_Timer" type="Timer" parent="."]
-
-[node name="Invuln_Timer" type="Timer" parent="."]
-
 [node name="All Specials" type="Node3D" parent="."]
 
 [node name="Bash" parent="All Specials" instance=ExtResource("20_cvqaa")]
 
-[node name="Stats" type="Node" parent="."]
-script = ExtResource("21_7eo2j")
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-
-[node name="ProgressBar" type="ProgressBar" parent="Control" node_paths=PackedStringArray("timer")]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 142.0
-offset_right = 153.0
-offset_bottom = 242.0
-rotation = -1.5708
-value = 33.5
-show_percentage = false
-script = ExtResource("22_1hc71")
-timer = NodePath("../../Special1_Timer")
-
-[node name="Label" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 145.0
-offset_right = 150.0
-offset_bottom = 187.0
-text = "50"
-label_settings = SubResource("LabelSettings_t2ang")
-horizontal_alignment = 1
-script = SubResource("GDScript_52qa5")
-
-[connection signal="animation_finished" from="HitboxAnimations" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Stun_Timer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="Dash_Timer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DT_Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="Special1_Timer" to="." method="_on_special_1_timer_timeout"]
-[connection signal="timeout" from="Invuln_Timer" to="." method="_on_invuln_timer_timeout"]

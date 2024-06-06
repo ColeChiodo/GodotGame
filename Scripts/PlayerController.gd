@@ -1,10 +1,14 @@
 extends CharacterBody3D
 
 @onready var animator = $AnimatedSprite3D
-@onready var animation_player = $AnimationPlayer
+@onready var hitbox_animation_player = $HitboxAnimations
+@onready var invuln_animation_player = $InvulnAnimations
 @onready var hitbox = $BasicAttack/Hitbox
 @onready var basic_attack = $BasicAttack
 @onready var sp_slot_1 = $SpecialSlot1
+@onready var stats = $Stats
+
+@onready var special1_charge_ui = $Control/Label
 
 const SPEED = 5.0
 const DASH = 800
@@ -13,6 +17,8 @@ var gravity = 20
 
 var max_combo = 4
 var curr_combo = 0
+
+@onready var special1_charges = stats.special1_max_charges
 
 @export var x_dir = 1
 
@@ -35,13 +41,21 @@ var dash_cd = .3
 
 var blocking = false
 
+var invulnerable = false
+
 # Double tap direction to dash
 var dt_left = false
 var dt_right = false
 var dt_up = false
 var dt_down = false
 
+func _ready():
+	special1_charge_ui.text = str(special1_charges)
+
 func _physics_process(delta):
+	if invulnerable:
+		invuln_animation_player.play("invuln")
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		
@@ -164,23 +178,23 @@ func _basic_atk():
 	can_attack = false
 	
 	if curr_combo == 0:
-		basic_attack.set_attack(2, 5, .45, x_dir)
-		animation_player.play("atk1")
+		basic_attack.set_attack(2, stats.crit_rate, 5, .45, x_dir)
+		hitbox_animation_player.play("atk1")
 		animator.play("atk1")
 		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 1:
-		basic_attack.set_attack(3, 5, .75, x_dir)
-		animation_player.play("atk2")
+		basic_attack.set_attack(3, stats.crit_rate, 5, .75, x_dir)
+		hitbox_animation_player.play("atk2")
 		animator.play("atk2")
 		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
-		basic_attack.set_attack(5, 10, .85, x_dir)
-		animation_player.play("atk3")
+		basic_attack.set_attack(5, stats.crit_rate, 10, .85, x_dir)
+		hitbox_animation_player.play("atk3")
 		animator.play("atk3")
 		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
-		basic_attack.set_attack(4, 10, .5, x_dir)
-		animation_player.play("atk4")
+		basic_attack.set_attack(4, stats.crit_rate, 10, .5, x_dir)
+		hitbox_animation_player.play("atk4")
 		animator.play("atk4")
 		await get_tree().create_timer(.8).timeout
 	curr_combo += 1
@@ -190,7 +204,10 @@ func _basic_atk():
 	attacking = false
 	can_attack = true
 
-func use_special(special : Special):
+func use_special(special):
+	if special1_charges == 0:
+		return
+	
 	attacking = true
 	can_attack = false
 	
@@ -198,6 +215,13 @@ func use_special(special : Special):
 	special.activate()
 	
 	await get_tree().create_timer(special.duration).timeout
+	
+	if special1_charges == stats.special1_max_charges:
+		$Special1_Timer.wait_time = special.cooldown
+		$Special1_Timer.start()
+		
+	special1_charges -= 1
+	special1_charge_ui.text = str(special1_charges)
 	
 	attacking = false
 	can_attack = true
@@ -240,3 +264,16 @@ func _on_animation_player_animation_finished(_anim_name):
 
 func _on_stun_timer_timeout():
 	stunned = false
+	invulnerable = true
+	$Invuln_Timer.wait_time = stats.invuln_time
+	$Invuln_Timer.start()
+
+func _on_invuln_timer_timeout():
+	invulnerable = false
+
+func _on_special_1_timer_timeout():
+	special1_charges += 1
+	special1_charge_ui.text = str(special1_charges)
+	print(special1_charges)
+	if special1_charges == stats.special1_max_charges:
+		$Special1_Timer.stop()

@@ -25,6 +25,10 @@ func _ready():
 	hp = max_health
 	
 func _dmg(attack : Attack):
+	if "invulnerable" in owner:
+		if owner.invulnerable:
+			return
+		
 	if owner.has_method("_blocking"):
 		if owner._blocking(attack):
 			if owner.has_method("_knockback"):

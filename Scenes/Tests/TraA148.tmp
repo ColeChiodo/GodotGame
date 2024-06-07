@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://n0m5mbljm4jn"]
+[gd_scene load_steps=30 format=3 uid="uid://n0m5mbljm4jn"]
 
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="1_a1qb2"]
 [ext_resource type="Script" path="res://Scripts/Test_Enemy.gd" id="1_g1f5d"]
@@ -8,7 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="6_5y58s"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_87met"]
-size = Vector3(0.625, 1.161, 1)
+size = Vector3(1.14209, 1.16092, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_78lp2"]
+size = Vector3(1, 2, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_du7nk"]
 atlas = ExtResource("2_wwy5w")
@@ -134,7 +137,7 @@ animations = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pow1i"]
-size = Vector3(2, 2, 1)
+size = Vector3(0.697021, 1.15918, 1)
 
 [sub_resource type="Animation" id="Animation_p16mr"]
 length = 0.001
@@ -172,59 +175,28 @@ _data = {
 "die": SubResource("Animation_aavi5")
 }
 
-[sub_resource type="Animation" id="Animation_w0e8r"]
-resource_name = "active"
-length = 9.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ThrowHitbox:monitoring")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_er4pu"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ThrowHitbox:monitoring")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_dswae"]
-_data = {
-"RESET": SubResource("Animation_er4pu"),
-"active": SubResource("Animation_w0e8r")
-}
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig8ei"]
-size = Vector3(2, 2, 2)
+size = Vector3(1, 2, 1)
 
-[node name="Training_Dummy" type="RigidBody3D"]
+[node name="Training_Dummy" type="CharacterBody3D"]
+transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 0, 0, 0)
 collision_layer = 4
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
 script = ExtResource("1_g1f5d")
+always_block = null
 
 [node name="PhysCollider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0192871, 0.58046, 0)
 shape = SubResource("BoxShape3D_87met")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+transparency = 1.0
+mesh = SubResource("BoxMesh_78lp2")
+skeleton = NodePath("")
+
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(8.25, 0, 0, 0, 8.25, 0, 0, 0, 8.25, 0, 1, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0.5, 0)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_7qtob")
@@ -232,17 +204,18 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="Health" parent="." instance=ExtResource("1_yfb20")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15395, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1638, 0)
 max_health = 1000.0
 
-[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("health")]
+[node name="Hurtbox" type="Area3D" parent="Health" node_paths=PackedStringArray("health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1638, 0)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_a1qb2")
-health = NodePath("../Health")
+health = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Health/Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0180054, 0.57959, 0)
 shape = SubResource("BoxShape3D_pow1i")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -251,19 +224,13 @@ libraries = {
 }
 
 [node name="ThrownHitboxAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_dswae")
-}
 
-[node name="ThrowAttack" parent="." instance=ExtResource("5_taldb")]
+[node name="Attack" parent="ThrownHitboxAnimation" instance=ExtResource("5_taldb")]
 
-[node name="ThrowHitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("6_5y58s")]
+[node name="Hitbox" parent="ThrownHitboxAnimation" instance=ExtResource("6_5y58s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-collision_layer = 2
-monitoring = false
-attack = NodePath("../ThrowAttack")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ThrowHitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ThrownHitboxAnimation/Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_ig8ei")
 

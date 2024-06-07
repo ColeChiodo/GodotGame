@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bfwwuw8eab5rn"]
 
-[ext_resource type="Script" path="res://Scripts/InteractableObject.gd" id="1_gks0q"]
+[ext_resource type="Script" path="res://Scripts/ThrowableObject.gd" id="1_f27lv"]
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="2_g7tmw"]
 [ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="3_p84ce"]
 [ext_resource type="PackedScene" uid="uid://b0ha5guvgh5q2" path="res://Assets/Art/Models/soccer_ball.glb" id="4_wx5id"]
@@ -19,6 +19,21 @@ radius = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_llxml"]
 
+[sub_resource type="Animation" id="Animation_12g5y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox:monitoring")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_tuioi"]
 resource_name = "active"
 length = 9.0
@@ -35,21 +50,6 @@ tracks/0/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_12g5y"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Hitbox:monitoring")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_un4fr"]
 _data = {
 "RESET": SubResource("Animation_12g5y"),
@@ -60,7 +60,7 @@ _data = {
 collision_layer = 0
 mass = 0.32
 physics_material_override = SubResource("PhysicsMaterial_hupky")
-script = ExtResource("1_gks0q")
+script = ExtResource("1_f27lv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)

@@ -43,6 +43,7 @@ var blocking = false
 
 var invulnerable = false
 
+var holding = false
 var can_interact = true
 
 # Double tap direction to dash
@@ -63,6 +64,16 @@ func _physics_process(delta):
 		
 	if dead or stunned:
 		return
+		
+	# Handle throw
+	if Input.is_action_just_pressed("player_throw") and not dashing and not attacking:
+		attacking = true
+		can_attack = false
+		animator.play("grab")
+		hitbox_animation_player.play("throw")
+		await get_tree().create_timer(.6).timeout
+		attacking = false
+		can_attack = true
 	
 	# Handle blocking
 	if Input.is_action_just_pressed("player_block") and is_on_floor() and not dashing and not attacking:
@@ -189,22 +200,22 @@ func _basic_atk():
 	can_attack = false
 	
 	if curr_combo == 0:
-		basic_attack.set_attack(2, stats.crit_rate, 5, .45, x_dir)
+		basic_attack.set_attack(2, stats.crit_rate, 1, .6, x_dir)
 		hitbox_animation_player.play("atk1")
 		animator.play("atk1")
 		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 1:
-		basic_attack.set_attack(3, stats.crit_rate, 5, .75, x_dir)
+		basic_attack.set_attack(3, stats.crit_rate, 1, .9, x_dir)
 		hitbox_animation_player.play("atk2")
 		animator.play("atk2")
 		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
-		basic_attack.set_attack(5, stats.crit_rate, 10, .85, x_dir)
+		basic_attack.set_attack(5, stats.crit_rate, 2, .85, x_dir)
 		hitbox_animation_player.play("atk3")
 		animator.play("atk3")
 		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
-		basic_attack.set_attack(4, stats.crit_rate, 10, .5, x_dir)
+		basic_attack.set_attack(4, stats.crit_rate, 1, .4, x_dir)
 		hitbox_animation_player.play("atk4")
 		animator.play("atk4")
 		await get_tree().create_timer(.8).timeout
@@ -285,6 +296,5 @@ func _on_invuln_timer_timeout():
 func _on_special_1_timer_timeout():
 	special1_charges += 1
 	special1_charge_ui.text = str(special1_charges)
-	print(special1_charges)
 	if special1_charges == stats.special1_max_charges:
 		$Special1_Timer.stop()

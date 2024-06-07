@@ -13,3 +13,10 @@ func _dmg(attack : Attack):
 		Engine.time_scale = .1
 		await get_tree().create_timer(.015).timeout
 		Engine.time_scale = 1
+
+func _throw(dir):
+	if owner.has_method("_blocking"):
+		if owner._blocking(dir):
+			return
+			
+	owner._throw(dir)

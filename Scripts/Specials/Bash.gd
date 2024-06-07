@@ -13,7 +13,7 @@ func _init():
 
 func activate():
 	active = true
-	attack.set_attack(7, owner.stats.crit_rate, 30, 1.25, owner.x_dir)
+	attack.set_attack(7, owner.stats.crit_rate, 10, 1.25, owner.x_dir)
 	animation_player.play("RESET")
 	animation_player.play(anim_name)
 	await get_tree().create_timer(duration).timeout

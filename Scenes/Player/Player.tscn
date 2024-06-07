@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=115 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dgww04jgrs10d" path="res://Assets/Art/Characters/temp_Knight_player/Shield_idle_KG.png" id="6_xu3wd"]
 [ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="9_rihh1"]
 [ext_resource type="Texture2D" uid="uid://bs5mo3nun1e2l" path="res://Assets/Art/Characters/temp_Knight_player/Hurt_KG_1.png" id="10_8qdbi"]
+[ext_resource type="Texture2D" uid="uid://ckhvq3y6y0moy" path="res://Assets/Art/Characters/temp_Knight_player/Pushing_KG_1.png" id="11_gap3p"]
 [ext_resource type="Texture2D" uid="uid://duu43d8pyas2" path="res://Assets/Art/Characters/temp_Knight_player/Shield_Bash_KG.png" id="14_bl8uw"]
 [ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="17_dbtqv"]
 [ext_resource type="Script" path="res://Scripts/Specials/SpecialSlot.gd" id="19_4vp6n"]
@@ -22,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://dsfh5eadax5yk" path="res://Scenes/Specials/bash.tscn" id="20_cvqaa"]
 [ext_resource type="Script" path="res://Scripts/PlayerStats.gd" id="21_7eo2j"]
 [ext_resource type="Script" path="res://Scripts/CooldownUI.gd" id="22_1hc71"]
+[ext_resource type="Script" path="res://Scripts/ThrowRayCast.gd" id="23_6ci5b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
 size = Vector3(1, 2, 1)
@@ -201,6 +203,26 @@ region = Rect2(100, 0, 100, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_x5tr5"]
 atlas = ExtResource("2_wrt0f")
 region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0sfd1"]
+atlas = ExtResource("11_gap3p")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5b38f"]
+atlas = ExtResource("11_gap3p")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovxg3"]
+atlas = ExtResource("11_gap3p")
+region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q25lj"]
+atlas = ExtResource("11_gap3p")
+region = Rect2(300, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wx0qc"]
+atlas = ExtResource("11_gap3p")
+region = Rect2(400, 0, 100, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6msod"]
 atlas = ExtResource("10_8qdbi")
@@ -507,6 +529,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_0sfd1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5b38f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovxg3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q25lj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wx0qc")
+}],
+"loop": true,
+"name": &"grab",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_6msod")
 }, {
 "duration": 1.0,
@@ -629,6 +671,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RayCast3D:enabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_bfs1m"]
 resource_name = "Attack"
@@ -688,7 +742,7 @@ tracks/0/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.4, 0.6, 0.8),
+"times": PackedFloat32Array(0, 0.1, 0.4, 0.5, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, true, false, true, false]
@@ -709,6 +763,22 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_wv13l"]
+resource_name = "throw"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RayCast3D:enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jn2aw"]
 _data = {
 "RESET": SubResource("Animation_bqyfm"),
@@ -716,7 +786,8 @@ _data = {
 "atk2": SubResource("Animation_jxbyf"),
 "atk3": SubResource("Animation_wq2m8"),
 "atk4": SubResource("Animation_x3j7i"),
-"invuln": SubResource("Animation_dh0ig")
+"invuln": SubResource("Animation_dh0ig"),
+"throw": SubResource("Animation_wv13l")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvh00"]
@@ -736,7 +807,7 @@ script/source = "extends Label
 collision_layer = 4
 collision_mask = 9
 script = ExtResource("1_mgauq")
-hitboxes = [NodePath("BasicAttack"), NodePath("All Specials/Bash")]
+hitboxes = [NodePath("BasicAttack"), NodePath("All Specials/Bash"), NodePath("GrabMarker"), NodePath("RayCast3D")]
 
 [node name="PhysCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -748,9 +819,9 @@ offset = Vector2(0, 32)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"idle"
+animation = &"grab"
 autoplay = "idle"
-frame_progress = 0.471265
+frame_progress = 0.490784
 
 [node name="HitboxAnimations" type="AnimationPlayer" parent="."]
 libraries = {
@@ -801,9 +872,6 @@ one_shot = true
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("21_7eo2j")
 
-[node name="GrabPosition" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
-
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -832,6 +900,20 @@ text = "50"
 label_settings = SubResource("LabelSettings_t2ang")
 horizontal_alignment = 1
 script = SubResource("GDScript_52qa5")
+
+[node name="GrabMarker" type="Node3D" parent="."]
+
+[node name="GrabPosition" type="Marker3D" parent="GrabMarker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.363427, 1.03186, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+exclude_parent = false
+target_position = Vector3(1.27, 0, 0)
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("23_6ci5b")
 
 [connection signal="animation_finished" from="HitboxAnimations" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Stun_Timer" to="." method="_on_stun_timer_timeout"]

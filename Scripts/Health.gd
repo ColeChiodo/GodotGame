@@ -30,7 +30,7 @@ func _dmg(attack : Attack):
 			return
 		
 	if owner.has_method("_blocking"):
-		if owner._blocking(attack):
+		if owner._blocking(attack.atk_pos):
 			if owner.has_method("_knockback"):
 				owner._knockback(attack)
 			return

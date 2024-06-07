@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=107 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -24,9 +24,6 @@
 [ext_resource type="Script" path="res://Scripts/CooldownUI.gd" id="22_1hc71"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
-size = Vector3(1, 2, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_c0aee"]
 size = Vector3(1, 2, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p3fqt"]
@@ -735,19 +732,15 @@ script/source = "extends Label
 
 "
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hitboxes")]
 collision_layer = 4
+collision_mask = 9
 script = ExtResource("1_mgauq")
+hitboxes = [NodePath("BasicAttack"), NodePath("All Specials/Bash")]
 
 [node name="PhysCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_hustl")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-visible = false
-mesh = SubResource("BoxMesh_c0aee")
-skeleton = NodePath("")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(3.69, 0, 0, 0, 3.69, 0, 0, 0, 3.69, 0, 0, 0)
@@ -757,7 +750,7 @@ texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.956544
+frame_progress = 0.471265
 
 [node name="HitboxAnimations" type="AnimationPlayer" parent="."]
 libraries = {
@@ -808,13 +801,16 @@ one_shot = true
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("21_7eo2j")
 
-[node name="Control" type="Control" parent="."]
+[node name="GrabPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="ProgressBar" type="ProgressBar" parent="Control" node_paths=PackedStringArray("timer")]
+[node name="ProgressBar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("timer")]
 layout_mode = 0
 offset_left = 53.0
 offset_top = 142.0
@@ -826,7 +822,7 @@ show_percentage = false
 script = ExtResource("22_1hc71")
 timer = NodePath("../../Special1_Timer")
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 58.0
 offset_top = 145.0

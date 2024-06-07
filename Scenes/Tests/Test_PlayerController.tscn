@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://c0qo0axw3ljey"]
+[gd_scene load_steps=19 format=3 uid="uid://c0qo0axw3ljey"]
 
 [ext_resource type="PackedScene" uid="uid://n7gqmawnwaa8" path="res://Scenes/Player/Player.tscn" id="1_j8vrb"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="1_ldbw5"]
 [ext_resource type="Texture2D" uid="uid://6vjyjv16ow8f" path="res://Assets/Art/Textures/Grids/Dark/texture_07.png" id="2_qaj8u"]
 [ext_resource type="PackedScene" uid="uid://n0m5mbljm4jn" path="res://Scenes/Tests/Training_Dummy.tscn" id="4_uxpyf"]
 [ext_resource type="Texture2D" uid="uid://gyuctbi4ybpu" path="res://Assets/Art/Textures/Grids/Orange/texture_01.png" id="5_1x1a8"]
+[ext_resource type="PackedScene" uid="uid://bfwwuw8eab5rn" path="res://Scenes/soccerball.tscn" id="6_8ge45"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8ayre"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -120,3 +121,6 @@ transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 4, 0, 0)
 
 [node name="Training_Dummy4" parent="." instance=ExtResource("4_uxpyf")]
 transform = Transform3D(1.83, 0, 0, 0, 1.83, 0, 0, 0, 1.83, 5, 0, 0)
+
+[node name="SoccerBall" parent="." instance=ExtResource("6_8ge45")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19245, 2.24254, 0)

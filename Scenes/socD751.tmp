@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfwwuw8eab5rn"]
+
+[ext_resource type="Script" path="res://Scripts/InteractableObject.gd" id="1_gks0q"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_72hqu"]
+radius = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_m8lgj"]
+radius = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfu2x"]
+size = Vector3(1.5, 1, 1.5)
+
+[node name="SoccerBall" type="RigidBody3D"]
+collision_layer = 7
+collision_mask = 7
+mass = 0.14
+script = ExtResource("1_gks0q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("SphereShape3D_72hqu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.2, 0)
+mesh = SubResource("CapsuleMesh_m8lgj")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="InteractRadius" type="Area3D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractRadius"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_tfu2x")

@@ -3,12 +3,12 @@ extends CharacterBody3D
 @onready var animator = $AnimatedSprite3D
 @onready var hitbox_animation_player = $HitboxAnimations
 @onready var invuln_animation_player = $InvulnAnimations
-@onready var hitbox = $BasicAttack/Hitbox
+@export var hitboxes : Array[Node3D] = []
 @onready var basic_attack = $BasicAttack
 @onready var sp_slot_1 = $SpecialSlot1
 @onready var stats = $Stats
 
-@onready var special1_charge_ui = $Control/Label
+@onready var special1_charge_ui = $UI/Label
 
 const SPEED = 5.0
 const DASH = 800
@@ -42,6 +42,8 @@ var dash_cd = .3
 var blocking = false
 
 var invulnerable = false
+
+var can_interact = true
 
 # Double tap direction to dash
 var dt_left = false
@@ -120,10 +122,13 @@ func _physics_process(delta):
 	
 	if direction.x > 0:
 		$AnimatedSprite3D.flip_h = false
+		for hitbox in hitboxes:
+			hitbox.global_rotation_degrees.y = 0
 		x_dir = 1
 	elif direction.x < 0:
 		$AnimatedSprite3D.flip_h = true
-		hitbox.transform.origin.x = -1
+		for hitbox in hitboxes:
+			hitbox.global_rotation_degrees.y = 180
 		x_dir = -1
 
 	if(Input.is_action_just_pressed("move_right")):
@@ -164,6 +169,12 @@ func _physics_process(delta):
 			animator.play("idle")
 
 	move_and_slide()
+	
+	# Handle object pushing
+	for count in get_slide_collision_count():
+		var body = get_slide_collision(count)
+		if body.get_collider() is RigidBody3D:
+			body.get_collider().apply_central_impulse(-body.get_normal())
 	
 func _dash():
 	$Dash_Timer.start()

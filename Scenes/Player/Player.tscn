@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=124 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://d0uqhh3n5020l" path="res://Assets/Art/Characters/temp_Knight_player/Attack_KG_3.png" id="4_foi0b"]
 [ext_resource type="Texture2D" uid="uid://xl3dglnbhoe0" path="res://Assets/Art/Characters/temp_Knight_player/Attack_KG_4.png" id="5_tuxvv"]
 [ext_resource type="Texture2D" uid="uid://dgww04jgrs10d" path="res://Assets/Art/Characters/temp_Knight_player/Shield_idle_KG.png" id="6_xu3wd"]
+[ext_resource type="Texture2D" uid="uid://cwvqgpcbew4cg" path="res://Assets/Art/Characters/temp_Knight_player/ladders_KG_1.png" id="8_rmu7y"]
+[ext_resource type="Texture2D" uid="uid://b1rvf27xk81pp" path="res://Assets/Art/Characters/temp_Knight_player/Grab_idle_KG_1.png" id="9_ox2br"]
 [ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="9_rihh1"]
 [ext_resource type="Texture2D" uid="uid://bs5mo3nun1e2l" path="res://Assets/Art/Characters/temp_Knight_player/Hurt_KG_1.png" id="10_8qdbi"]
 [ext_resource type="Texture2D" uid="uid://ckhvq3y6y0moy" path="res://Assets/Art/Characters/temp_Knight_player/Pushing_KG_1.png" id="11_gap3p"]
@@ -26,7 +28,7 @@
 [ext_resource type="Script" path="res://Scripts/ThrowRayCast.gd" id="23_6ci5b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
-size = Vector3(1, 2, 1)
+size = Vector3(1, 2, 1.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p3fqt"]
 atlas = ExtResource("2_yaqgb")
@@ -167,6 +169,34 @@ region = Rect2(200, 0, 100, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_2mf8a"]
 atlas = ExtResource("6_xu3wd")
 region = Rect2(300, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mynt5"]
+atlas = ExtResource("8_rmu7y")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfltk"]
+atlas = ExtResource("8_rmu7y")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b60c2"]
+atlas = ExtResource("8_rmu7y")
+region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpw5g"]
+atlas = ExtResource("8_rmu7y")
+region = Rect2(300, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nmpn"]
+atlas = ExtResource("9_ox2br")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f41ue"]
+atlas = ExtResource("9_ox2br")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hx7jv"]
+atlas = ExtResource("9_ox2br")
+region = Rect2(200, 0, 100, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6a6x6"]
 atlas = ExtResource("2_7in6o")
@@ -483,6 +513,37 @@ animations = [{
 }],
 "loop": true,
 "name": &"block",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mynt5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfltk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b60c2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpw5g")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nmpn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f41ue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hx7jv")
+}],
+"loop": true,
+"name": &"climb_idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -819,9 +880,8 @@ offset = Vector2(0, 32)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"grab"
+animation = &"climb_idle"
 autoplay = "idle"
-frame_progress = 0.490784
 
 [node name="HitboxAnimations" type="AnimationPlayer" parent="."]
 libraries = {

@@ -9,7 +9,7 @@ func _init():
 	monitoring = false
 	
 
-func _on_area_entered(area : Hurtbox):
+func _on_area_entered(area : Area3D):
 	for child in area.get_children():
 		if not area:
 			return

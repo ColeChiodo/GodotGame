@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://28fjbn4f8no2"]
+
+[ext_resource type="Texture2D" uid="uid://d1h4dy17t5i0y" path="res://Assets/Art/Textures/Grids/Purple/texture_13.png" id="1_qcnd4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aiwsk"]
+size = Vector3(0.75, 3, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tui5f"]
+size = Vector3(0.75, 3, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8r54b"]
+albedo_texture = ExtResource("1_qcnd4")
+uv1_offset = Vector3(0.5, 0, 0)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 1.00001
+uv1_world_triplanar = true
+uv2_triplanar = true
+uv2_world_triplanar = true
+
+[node name="Ladder" type="Area3D"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_aiwsk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_tui5f")
+surface_material_override/0 = SubResource("StandardMaterial3D_8r54b")

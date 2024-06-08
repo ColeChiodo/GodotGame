@@ -46,6 +46,9 @@ var invulnerable = false
 var holding = false
 var can_interact = true
 
+var on_ladder = false
+var climbing = false
+
 # Double tap direction to dash
 var dt_left = false
 var dt_right = false
@@ -58,15 +61,23 @@ func _ready():
 func _physics_process(delta):
 	if invulnerable:
 		invuln_animation_player.play("invuln")
+		
 	
-	if not is_on_floor():
+	# Handle Ladders
+	if on_ladder and Input.is_action_pressed("move_forward"):
+		climbing = true
+		
+	if on_ladder and is_on_floor() and Input.is_action_pressed("move_backward"):
+		climbing = false
+	
+	if not is_on_floor() and not climbing:
 		velocity.y -= gravity * delta
 		
 	if dead or stunned:
 		return
 		
 	# Handle throw
-	if Input.is_action_just_pressed("player_throw") and not dashing and not attacking:
+	if Input.is_action_just_pressed("player_throw") and not dashing and not attacking and not climbing:
 		attacking = true
 		can_attack = false
 		animator.play("grab")
@@ -76,7 +87,7 @@ func _physics_process(delta):
 		can_attack = true
 	
 	# Handle blocking
-	if Input.is_action_just_pressed("player_block") and is_on_floor() and not dashing and not attacking:
+	if Input.is_action_just_pressed("player_block") and is_on_floor() and not dashing and not attacking and not climbing:
 		animator.play("block")
 		blocking = true
 	
@@ -88,14 +99,14 @@ func _physics_process(delta):
 		return
 	
 	# Handle basic attack
-	if Input.is_action_just_pressed("attack_basic") and is_on_floor() and not dashing:
+	if Input.is_action_just_pressed("attack_basic") and is_on_floor() and not dashing and not climbing:
 		if can_attack:
 			if sprinting:
 				sprinting = false
 			_basic_atk()
 			
 	
-	if Input.is_action_just_pressed("special_attack_1") and (sp_slot_1.special.can_use_in_air || is_on_floor()) and not dashing:
+	if Input.is_action_just_pressed("special_attack_1") and (sp_slot_1.special.can_use_in_air || is_on_floor()) and not dashing and not climbing:
 		if can_attack:
 			if sprinting:
 				sprinting = false
@@ -109,9 +120,9 @@ func _physics_process(delta):
 		velocity.y = JUMP_VELOCITY
 		sprinting = false
 	
-	if not is_on_floor() and velocity.y > 0:
+	if not is_on_floor() and velocity.y > 0 and not climbing:
 		animator.play("jump")
-	elif not is_on_floor() and velocity.y < 0:
+	elif not is_on_floor() and velocity.y < 0 and not climbing:
 		animator.play("fall")
 	
 	if(Input.is_action_just_released("move_right")):
@@ -164,20 +175,28 @@ func _physics_process(delta):
 	
 	if direction:
 		velocity.x = direction.x * SPEED * sprint_mult
-		velocity.z = direction.z * SPEED * sprint_mult * dash_mult
+		if climbing:
+			velocity.y = -direction.z * SPEED * sprint_mult * dash_mult
+		else:
+			velocity.z = direction.z * SPEED * sprint_mult * dash_mult
 		if is_on_floor() and not dashing:
 			if not sprinting:
 				animator.play("walk")
 			else:
 				animator.play("run")
-			
+		if climbing:
+				animator.play("climb")
 	else:
 		if sprinting:
 			sprinting = false
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		if climbing:
+			velocity.y = move_toward(velocity.y, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		if is_on_floor():
 			animator.play("idle")
+		elif climbing:
+			animator.play("climb_idle")
 
 	move_and_slide()
 	
@@ -298,3 +317,13 @@ func _on_special_1_timer_timeout():
 	special1_charge_ui.text = str(special1_charges)
 	if special1_charges == stats.special1_max_charges:
 		$Special1_Timer.stop()
+
+
+func _on_ladder_body_entered(body : CharacterBody3D):
+	if "Player" in body.name:
+		on_ladder = true
+
+func _on_ladder_body_exited(body : CharacterBody3D):
+	if "Player" in body.name:
+		on_ladder = false
+		climbing = false

@@ -91,3 +91,9 @@ libraries = {
 [node name="ItemStats" parent="." instance=ExtResource("5_eapo1")]
 swing_atk = 10
 throw_atk = 12
+
+[node name="Cooldown_Timer" type="Timer" parent="."]
+wait_time = 0.35
+one_shot = true
+
+[connection signal="timeout" from="Cooldown_Timer" to="." method="_on_cooldown_timer_timeout"]

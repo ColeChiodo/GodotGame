@@ -21,5 +21,5 @@ func activate():
 
 func _physics_process(_delta):
 	if active:
-		owner.velocity.x = owner.x_dir * 18
+		owner.velocity.x = owner.x_dir * 10
 		owner.move_and_slide()

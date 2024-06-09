@@ -154,7 +154,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19245, 2.24254, 0)
 
 [node name="Crowbar" parent="." instance=ExtResource("8_d6bil")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3, -2)
 
 [connection signal="body_entered" from="Ladder" to="Player" method="_on_ladder_body_entered"]
 [connection signal="body_exited" from="Ladder" to="Player" method="_on_ladder_body_exited"]

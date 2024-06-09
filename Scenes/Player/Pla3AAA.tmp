@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=148 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -22,7 +22,6 @@
 [ext_resource type="Texture2D" uid="uid://duu43d8pyas2" path="res://Assets/Art/Characters/temp_Knight_player/Shield_Bash_KG.png" id="14_bl8uw"]
 [ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="17_dbtqv"]
 [ext_resource type="Script" path="res://Scripts/Specials/SpecialSlot.gd" id="19_4vp6n"]
-[ext_resource type="Texture2D" uid="uid://dbgnyhk70uqsn" path="res://Assets/Art/Characters/temp_Knight_player/Dashing_KG_1.png" id="19_yjrh7"]
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="20_3trx3"]
 [ext_resource type="PackedScene" uid="uid://dsfh5eadax5yk" path="res://Scenes/Specials/bash.tscn" id="20_cvqaa"]
 [ext_resource type="Script" path="res://Scripts/CooldownUI.gd" id="22_1hc71"]
@@ -347,22 +346,6 @@ region = Rect2(500, 0, 100, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_wnbjo"]
 atlas = ExtResource("3_vxfj7")
 region = Rect2(600, 0, 100, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_86cw3"]
-atlas = ExtResource("19_yjrh7")
-region = Rect2(0, 0, 100, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7x0vh"]
-atlas = ExtResource("19_yjrh7")
-region = Rect2(100, 0, 100, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8pq5q"]
-atlas = ExtResource("19_yjrh7")
-region = Rect2(200, 0, 100, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v8qhu"]
-atlas = ExtResource("19_yjrh7")
-region = Rect2(300, 0, 100, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m3yyg"]
 atlas = ExtResource("3_2av8l")
@@ -730,23 +713,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_86cw3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7x0vh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8pq5q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v8qhu")
-}],
-"loop": true,
-"name": &"sprint_atk",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_m3yyg")
 }, {
 "duration": 1.0,
@@ -781,18 +747,6 @@ tracks/0/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AirAttack/Hitbox:monitoring")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1494,46 +1448,6 @@ tracks/2/keys = {
 "values": [false, true, false]
 }
 
-[sub_resource type="Animation" id="Animation_77dsl"]
-resource_name = "sprint_atk"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite3D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"sprint_atk"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite3D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("BasicAttack/Hitbox:monitoring")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f6h2l"]
 _data = {
 "RESET": SubResource("Animation_b570e"),
@@ -1554,7 +1468,6 @@ _data = {
 "item_atk": SubResource("Animation_c4ix5"),
 "jump": SubResource("Animation_wfai7"),
 "run": SubResource("Animation_jdgar"),
-"sprint_atk": SubResource("Animation_77dsl"),
 "walk": SubResource("Animation_egc83")
 }
 
@@ -1723,8 +1636,9 @@ offset = Vector2(0, 32)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"sprint_atk"
+animation = &"air_atk"
 autoplay = "idle"
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1753,7 +1667,6 @@ shape = SubResource("BoxShape3D_cvh00")
 [node name="AirAttack" parent="." instance=ExtResource("17_dbtqv")]
 
 [node name="Hitbox" parent="AirAttack" node_paths=PackedStringArray("attack") instance=ExtResource("20_3trx3")]
-monitoring = false
 attack = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AirAttack/Hitbox"]

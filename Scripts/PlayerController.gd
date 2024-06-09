@@ -4,6 +4,7 @@ extends CharacterBody3D
 @onready var invuln_animation_player = $InvulnAnimations
 @export var hitboxes : Array[Node3D] = []
 @onready var basic_attack = $BasicAttack
+@onready var air_attack = $AirAttack
 @onready var sp_slot_1 = $SpecialSlot1
 @onready var stats = $Stats
 
@@ -31,6 +32,7 @@ var can_attack = true
 
 var sprinting = false
 var can_sprint = true
+var sprint_atk = false
 var sprint_mult = 1.0
 
 var dashing = false
@@ -58,9 +60,20 @@ func _ready():
 	special1_charge_ui.text = str(special1_charges)
 
 func _physics_process(delta):
+	if sprint_atk:
+		velocity.x = x_dir * 6.0
+		move_and_slide()
+	
+	if not $Timers/Action_Timer.is_stopped() and is_on_floor():
+		$Timers/Action_Timer.stop()
+		animator.stop()
+		animator.play("RESET")
+		
+		attacking = false
+		can_attack = true
+	
 	if invulnerable:
 		invuln_animation_player.play("invuln")
-		
 	
 	# Handle Ladders
 	if on_ladder and Input.is_action_pressed("move_forward"):
@@ -71,18 +84,11 @@ func _physics_process(delta):
 	
 	if not is_on_floor() and not climbing:
 		velocity.y -= gravity * delta
-		
+	
+	print(velocity.y)
+	
 	if dead or stunned:
 		return
-		
-	# Handle throw
-	if Input.is_action_just_pressed("player_throw") and not dashing and not attacking and not climbing and not holding:
-		attacking = true
-		can_attack = false
-		animator.play("grab")
-		await get_tree().create_timer(.6).timeout
-		attacking = false
-		can_attack = true
 	
 	# Handle blocking
 	if Input.is_action_just_pressed("player_block") and is_on_floor() and not dashing and not attacking and not climbing:
@@ -95,26 +101,41 @@ func _physics_process(delta):
 	
 	if blocking:
 		return
+		
+	# Handle throw
+	if Input.is_action_just_pressed("player_throw") and not dashing and not attacking and not climbing and not holding:
+		attacking = true
+		can_attack = false
+		animator.play("grab")
+		await get_tree().create_timer(.6).timeout
+		attacking = false
+		can_attack = true
 	
 	# Handle basic attack
-	if Input.is_action_just_pressed("attack_basic") and is_on_floor() and not dashing and not climbing:
+	if Input.is_action_just_pressed("attack_basic") and not dashing and not climbing:
 		if can_attack:
-			if sprinting:
-				sprinting = false
 			if holding:
+				if sprinting:
+					sprinting = false
 				_item_atk()
-			else:
+			elif sprinting:
+				_sprint_atk()
+			elif is_on_floor():
 				_basic_atk()
+			else:
+				_air_atk()
 			
 	
 	if Input.is_action_just_pressed("special_attack_1") and (sp_slot_1.special.can_use_in_air || is_on_floor()) and not dashing and not climbing:
-		if can_attack:
-			if sprinting:
-				sprinting = false
-			use_special(sp_slot_1.special)
+		#if can_attack:
+		if sprinting:
+			sprinting = false
+		use_special(sp_slot_1.special)
 	
-	if attacking:
-		return
+	if not is_on_floor() and velocity.y > 0 and not climbing and not attacking:
+		animator.play("jump")
+	elif not is_on_floor() and velocity.y < 0 and not climbing and not attacking:
+		animator.play("fall")
 
 	# Handle jump.
 	if (Input.is_action_just_pressed("player_jump") and is_on_floor() and not dashing) or (Input.is_action_pressed("player_jump") and Input.is_action_pressed("move_backward") and climbing):
@@ -122,38 +143,34 @@ func _physics_process(delta):
 		sprinting = false
 		climbing = false
 	
-	if not is_on_floor() and velocity.y > 0 and not climbing:
-		animator.play("jump")
-	elif not is_on_floor() and velocity.y < 0 and not climbing:
-		animator.play("fall")
-	
 	if(Input.is_action_just_released("move_right")):
 		dt_right = true
-		$DT_Timer.start()
+		$Timers/DT_Timer.start()
 	if(Input.is_action_just_released("move_left")):
 		dt_left = true
-		$DT_Timer.start()
+		$Timers/DT_Timer.start()
 	if(Input.is_action_just_released("move_forward")):
 		dt_up = true
-		$DT_Timer.start()
+		$Timers/DT_Timer.start()
 	if(Input.is_action_just_released("move_backward")):
 		dt_down = true
-		$DT_Timer.start()
+		$Timers/DT_Timer.start()
 
 	# Handle directional movement
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	if direction.x > 0:
-		$AnimatedSprite3D.flip_h = false
-		for hitbox in hitboxes:
-			hitbox.global_rotation_degrees.y = 0
-		x_dir = 1
-	elif direction.x < 0:
-		$AnimatedSprite3D.flip_h = true
-		for hitbox in hitboxes:
-			hitbox.rotation_degrees.y = 180
-		x_dir = -1
+	if not attacking:
+		if direction.x > 0:
+			$AnimatedSprite3D.flip_h = false
+			for hitbox in hitboxes:
+				hitbox.global_rotation_degrees.y = 0
+			x_dir = 1
+		elif direction.x < 0:
+			$AnimatedSprite3D.flip_h = true
+			for hitbox in hitboxes:
+				hitbox.rotation_degrees.y = 180
+			x_dir = -1
 
 	if(Input.is_action_just_pressed("move_right")):
 		if dt_right and can_sprint:
@@ -175,7 +192,7 @@ func _physics_process(delta):
 	else:
 		sprint_mult = 1
 	
-	if direction:
+	if direction and (not attacking or not is_on_floor()):
 		velocity.x = direction.x * SPEED * sprint_mult
 		if climbing:
 			velocity.y = -direction.z * SPEED * sprint_mult * dash_mult
@@ -195,10 +212,11 @@ func _physics_process(delta):
 		if climbing:
 			velocity.y = move_toward(velocity.y, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-		if is_on_floor():
-			animator.play("idle")
-		elif climbing:
-			animator.play("climb_idle")
+		if not attacking:
+			if is_on_floor():
+				animator.play("idle")
+			elif climbing:
+				animator.play("climb_idle")
 
 	move_and_slide()
 	
@@ -209,7 +227,7 @@ func _physics_process(delta):
 			body.get_collider().apply_central_impulse(-body.get_normal())
 	
 func _dash():
-	$Dash_Timer.start()
+	$Timers/Dash_Timer.start()
 	sprinting = false
 	can_sprint = false
 	dashing = true
@@ -233,8 +251,8 @@ func _basic_atk():
 		basic_attack.set_attack(4, stats.crit_rate, 1, .4, x_dir)
 		animator.play("atk4")
 	
-	$Chain_Atk_Timer.wait_time = animator.current_animation_length + .1
-	$Chain_Atk_Timer.start()
+	$Timers/Chain_Atk_Timer.wait_time = animator.current_animation_length + .1
+	$Timers/Chain_Atk_Timer.start()
 	await get_tree().create_timer(animator.current_animation_length - .1).timeout
 	
 	curr_combo += 1
@@ -255,6 +273,29 @@ func _item_atk():
 	attacking = false
 	can_attack = true
 
+func _sprint_atk():
+	attacking = true
+	can_attack = false
+	sprint_atk = true
+	
+	basic_attack.set_attack(7, stats.crit_rate, 1, .6, x_dir)
+	animator.play("sprint_atk")
+	
+	await get_tree().create_timer(animator.current_animation_length).timeout
+	
+	attacking = false
+	can_attack = true
+	sprint_atk = false
+
+func _air_atk():
+	attacking = true
+	can_attack = false
+	
+	air_attack.set_attack(5, stats.crit_rate, 1, .6, x_dir)
+	animator.play("air_atk")
+	$Timers/Action_Timer.wait_time = animator.current_animation_length
+	$Timers/Action_Timer.start()
+
 func use_special(special):
 	if special1_charges == 0:
 		return
@@ -262,14 +303,16 @@ func use_special(special):
 	attacking = true
 	can_attack = false
 	
+	animator.stop()
+	animator.play("RESET")
 	animator.play(special.anim_name)
 	special.activate()
 	
 	await get_tree().create_timer(special.duration).timeout
 	
 	if special1_charges == stats.special1_max_charges:
-		$Special1_Timer.wait_time = special.cooldown
-		$Special1_Timer.start()
+		$Timers/Special1_Timer.wait_time = special.cooldown
+		$Timers/Special1_Timer.start()
 		
 	special1_charges -= 1
 	special1_charge_ui.text = str(special1_charges)
@@ -287,8 +330,8 @@ func _hit(attack : Attack):
 	animator.play("hit")
 	stunned = true
 	blocking = false
-	$Stun_Timer.wait_time = attack.atk_stun
-	$Stun_Timer.start()
+	$Timers/Stun_Timer.wait_time = attack.atk_stun
+	$Timers/Stun_Timer.start()
 	
 func _knockback(attack : Attack):
 	velocity.x = attack.atk_pos * attack.knockback
@@ -316,8 +359,8 @@ func _on_chain_atk_timer_timeout():
 func _on_stun_timer_timeout():
 	stunned = false
 	invulnerable = true
-	$Invuln_Timer.wait_time = stats.invuln_time
-	$Invuln_Timer.start()
+	$Timers/Invuln_Timer.wait_time = stats.invuln_time
+	$Timers/Invuln_Timer.start()
 
 func _on_invuln_timer_timeout():
 	invulnerable = false
@@ -326,7 +369,11 @@ func _on_special_1_timer_timeout():
 	special1_charges += 1
 	special1_charge_ui.text = str(special1_charges)
 	if special1_charges == stats.special1_max_charges:
-		$Special1_Timer.stop()
+		$Timers/Special1_Timer.stop()
+
+func _on_action_timer_timeout():
+	attacking = false
+	can_attack = true
 
 func _on_ladder_body_entered(body : CharacterBody3D):
 	if "Player" in body.name:

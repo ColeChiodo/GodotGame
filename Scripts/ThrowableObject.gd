@@ -3,7 +3,10 @@ extends RigidBody3D
 @onready var attack = $Attack
 @onready var animation_player = $AnimationPlayer
 @onready var stats = $ItemStats
+@onready var cd_timer = $Cooldown_Timer
+
 var picked = false
+var can_pick = true
 
 func _physics_process(_delta):
 	if linear_velocity.y != 0 and not picked:
@@ -42,11 +45,12 @@ func _physics_process(_delta):
 		
 		collision_mask = 1
 	
-	if Input.is_action_just_pressed("player_interact") and not picked and not get_node("../Player").blocking: # pickup
+	if can_pick and Input.is_action_just_pressed("player_interact") and not picked and not get_node("../Player").blocking: # pickup
 		var bodies = $InteractRadius.get_overlapping_bodies()
 		for body in bodies:
 			if body.name == "Player" and get_node("../Player").can_interact:
 				picked = true
+				can_pick = false
 				get_node("../Player").can_interact = false
 				get_node("../Player").holding = true
 				get_node("../Player").stats.item_atk = stats.swing_atk
@@ -59,13 +63,21 @@ func _physics_process(_delta):
 		throw()
 
 func drop():
+	cd_timer.wait_time = 1
+	cd_timer.start()
+	
 	picked = false
 	get_node("../Player").can_interact = true
 	get_node("../Player").holding = false
-	
 	
 func throw():
+	cd_timer.wait_time = 1
+	cd_timer.start()
+	
 	picked = false
 	get_node("../Player").can_interact = true
 	get_node("../Player").holding = false
-	apply_impulse(Vector3(get_node("../Player").x_dir * 5, 0, 0), Vector3())
+	apply_impulse(Vector3(get_node("../Player").x_dir * 3, 1, 0), Vector3())
+
+func _on_cooldown_timer_timeout():
+	can_pick = true

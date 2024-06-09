@@ -16,7 +16,5 @@ func _dmg(attack : Attack):
 
 func _throw(dir):
 	if owner.has_method("_blocking"):
-		if owner._blocking(dir):
-			return
-			
+		owner.blocking = false
 	owner._throw(dir)

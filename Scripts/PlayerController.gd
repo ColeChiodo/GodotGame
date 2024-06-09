@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
-@onready var animator = $AnimatedSprite3D
-@onready var hitbox_animation_player = $HitboxAnimations
+@onready var animator = $AnimationPlayer
 @onready var invuln_animation_player = $InvulnAnimations
 @export var hitboxes : Array[Node3D] = []
 @onready var basic_attack = $BasicAttack
@@ -77,11 +76,10 @@ func _physics_process(delta):
 		return
 		
 	# Handle throw
-	if Input.is_action_just_pressed("player_throw") and not dashing and not attacking and not climbing:
+	if Input.is_action_just_pressed("player_throw") and not dashing and not attacking and not climbing and not holding:
 		attacking = true
 		can_attack = false
 		animator.play("grab")
-		hitbox_animation_player.play("throw")
 		await get_tree().create_timer(.6).timeout
 		attacking = false
 		can_attack = true
@@ -103,7 +101,10 @@ func _physics_process(delta):
 		if can_attack:
 			if sprinting:
 				sprinting = false
-			_basic_atk()
+			if holding:
+				_item_atk()
+			else:
+				_basic_atk()
 			
 	
 	if Input.is_action_just_pressed("special_attack_1") and (sp_slot_1.special.can_use_in_air || is_on_floor()) and not dashing and not climbing:
@@ -116,9 +117,10 @@ func _physics_process(delta):
 		return
 
 	# Handle jump.
-	if Input.is_action_just_pressed("player_jump") and is_on_floor() and not dashing:
+	if (Input.is_action_just_pressed("player_jump") and is_on_floor() and not dashing) or (Input.is_action_pressed("player_jump") and Input.is_action_pressed("move_backward") and climbing):
 		velocity.y = JUMP_VELOCITY
 		sprinting = false
+		climbing = false
 	
 	if not is_on_floor() and velocity.y > 0 and not climbing:
 		animator.play("jump")
@@ -150,7 +152,7 @@ func _physics_process(delta):
 	elif direction.x < 0:
 		$AnimatedSprite3D.flip_h = true
 		for hitbox in hitboxes:
-			hitbox.global_rotation_degrees.y = 180
+			hitbox.rotation_degrees.y = 180
 		x_dir = -1
 
 	if(Input.is_action_just_pressed("move_right")):
@@ -220,27 +222,35 @@ func _basic_atk():
 	
 	if curr_combo == 0:
 		basic_attack.set_attack(2, stats.crit_rate, 1, .6, x_dir)
-		hitbox_animation_player.play("atk1")
 		animator.play("atk1")
-		await get_tree().create_timer(.3).timeout
 	elif curr_combo == 1:
 		basic_attack.set_attack(3, stats.crit_rate, 1, .9, x_dir)
-		hitbox_animation_player.play("atk2")
 		animator.play("atk2")
-		await get_tree().create_timer(.4).timeout
 	elif curr_combo == 2:
 		basic_attack.set_attack(5, stats.crit_rate, 2, .85, x_dir)
-		hitbox_animation_player.play("atk3")
 		animator.play("atk3")
-		await get_tree().create_timer(.7).timeout
 	elif curr_combo == 3:
 		basic_attack.set_attack(4, stats.crit_rate, 1, .4, x_dir)
-		hitbox_animation_player.play("atk4")
 		animator.play("atk4")
-		await get_tree().create_timer(.8).timeout
+	
+	$Chain_Atk_Timer.wait_time = animator.current_animation_length + .1
+	$Chain_Atk_Timer.start()
+	await get_tree().create_timer(animator.current_animation_length - .1).timeout
+	
 	curr_combo += 1
-	if curr_combo == max_combo:
+	if curr_combo >= max_combo:
 		curr_combo = 0
+	
+	attacking = false
+	can_attack = true
+
+func _item_atk():
+	attacking = true
+	can_attack = false
+	
+	basic_attack.set_attack(stats.item_atk, stats.crit_rate, 1, .6, x_dir)
+	animator.play("item_atk")
+	await get_tree().create_timer(animator.current_animation_length).timeout
 	
 	attacking = false
 	can_attack = true
@@ -300,7 +310,7 @@ func _on_dash_timer_timeout():
 	await get_tree().create_timer(dash_cd).timeout
 	can_dash = true
 
-func _on_animation_player_animation_finished(_anim_name):
+func _on_chain_atk_timer_timeout():
 	curr_combo = 0
 
 func _on_stun_timer_timeout():
@@ -317,7 +327,6 @@ func _on_special_1_timer_timeout():
 	special1_charge_ui.text = str(special1_charges)
 	if special1_charges == stats.special1_max_charges:
 		$Special1_Timer.stop()
-
 
 func _on_ladder_body_entered(body : CharacterBody3D):
 	if "Player" in body.name:

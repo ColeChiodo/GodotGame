@@ -4,15 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="2_g7tmw"]
 [ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="3_p84ce"]
 [ext_resource type="PackedScene" uid="uid://b0ha5guvgh5q2" path="res://Assets/Art/Models/soccer_ball.glb" id="4_wx5id"]
+[ext_resource type="PackedScene" uid="uid://c72gkyaywg735" path="res://Scenes/Components/Stats/item_stats.tscn" id="5_h47t1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hupky"]
 bounce = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_72hqu"]
 radius = 0.2
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_m8lgj"]
-radius = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mggj6"]
 radius = 0.2
@@ -66,12 +64,6 @@ script = ExtResource("1_f27lv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 shape = SubResource("SphereShape3D_72hqu")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.2, 0)
-visible = false
-mesh = SubResource("CapsuleMesh_m8lgj")
-skeleton = NodePath("../CollisionShape3D")
-
 [node name="Hitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("2_g7tmw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 monitoring = false
@@ -99,3 +91,6 @@ libraries = {
 
 [node name="soccer_ball" parent="." instance=ExtResource("4_wx5id")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -0.42, -0.1, -0.38)
+
+[node name="ItemStats" parent="." instance=ExtResource("5_h47t1")]
+throw_atk = 6

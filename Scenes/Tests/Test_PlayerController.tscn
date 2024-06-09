@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c0qo0axw3ljey"]
+[gd_scene load_steps=24 format=3 uid="uid://c0qo0axw3ljey"]
 
 [ext_resource type="PackedScene" uid="uid://n7gqmawnwaa8" path="res://Scenes/Player/Player.tscn" id="1_j8vrb"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="1_ldbw5"]
@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://28fjbn4f8no2" path="res://Scenes/ladder.tscn" id="3_n6x6u"]
 [ext_resource type="PackedScene" uid="uid://n0m5mbljm4jn" path="res://Scenes/Tests/Training_Dummy.tscn" id="4_uxpyf"]
 [ext_resource type="Texture2D" uid="uid://gyuctbi4ybpu" path="res://Assets/Art/Textures/Grids/Orange/texture_01.png" id="5_1x1a8"]
-[ext_resource type="PackedScene" uid="uid://bfwwuw8eab5rn" path="res://Scenes/soccerball.tscn" id="6_8ge45"]
+[ext_resource type="PackedScene" uid="uid://bfwwuw8eab5rn" path="res://Scenes/throwable_objects/soccerball.tscn" id="6_8ge45"]
+[ext_resource type="PackedScene" uid="uid://bijtctw2sp5d" path="res://Scenes/throwable_objects/crowbar.tscn" id="8_d6bil"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8ayre"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -151,6 +152,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 
 [node name="SoccerBall" parent="." instance=ExtResource("6_8ge45")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19245, 2.24254, 0)
+
+[node name="Crowbar" parent="." instance=ExtResource("8_d6bil")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3, -1)
 
 [connection signal="body_entered" from="Ladder" to="Player" method="_on_ladder_body_entered"]
 [connection signal="body_exited" from="Ladder" to="Player" method="_on_ladder_body_exited"]

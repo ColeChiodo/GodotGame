@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c72gkyaywg735"]
+
+[ext_resource type="Script" path="res://Scripts/Stats/ThrowableObjectStats.gd" id="1_iksb4"]
+
+[node name="ItemStats" type="Node"]
+script = ExtResource("1_iksb4")
+item_atk = 10

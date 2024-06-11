@@ -1,9 +1,14 @@
 extends RigidBody3D
+class_name TrainingDummy
+
+@onready var fsm : FiniteStateMachine = $FSM
 
 @onready var animation_player = $AnimationPlayer
 @onready var animator = $AnimatedSprite3D
 @onready var throw_active = $ThrownHitboxAnimation
 @onready var throw_attack = $ThrowAttack
+
+@onready var nav : NavigationAgent3D = $NavigationAgent3D
 
 var gravity = 20
 
@@ -35,6 +40,11 @@ func _process(_delta):
 			blocking = true
 		animator.play("idle")
 		animator.modulate = Color(1, 1, 1)
+	
+	if not stunned:
+		fsm.change_state("Chase")
+	else:
+		fsm.change_state("Idle")
 
 func _die():
 	animation_player.play("die")

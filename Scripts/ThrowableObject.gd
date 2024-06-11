@@ -9,7 +9,7 @@ var picked = false
 var can_pick = true
 
 func _physics_process(_delta):
-	if linear_velocity.y != 0 and not picked:
+	if snapped(linear_velocity.y, 0.001) != 0 and not picked:
 		attack.set_attack(stats.throw_atk, 0, 5, .5, 1 if linear_velocity.x > 0 else -1)
 		animation_player.play("active")
 	else:

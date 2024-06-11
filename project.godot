@@ -13,6 +13,8 @@ config_version=5
 config/name="Project_R"
 run/main_scene="res://Scenes/Tests/Test_PlayerController.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+boot_splash/bg_color=Color(0.219501, 0.219501, 0.219501, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -114,6 +116,7 @@ player_throw={
 [layer_names]
 
 3d_physics/layer_1="World"
-3d_physics/layer_2="hitbox"
+3d_physics/layer_2="enemy_hitbox"
 3d_physics/layer_3="player"
-3d_physics/layer_4="pushable"
+3d_physics/layer_4="Enemy"
+3d_physics/layer_5="Layer 5"

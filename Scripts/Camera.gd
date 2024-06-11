@@ -1,7 +1,7 @@
 extends Camera3D
 
 @onready var player = $"../Player"
-var follow_player = true
+@export var follow_player = true
 var follow_speed = 1
 
 func _process(delta):

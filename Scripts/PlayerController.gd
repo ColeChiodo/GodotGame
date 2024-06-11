@@ -85,8 +85,6 @@ func _physics_process(delta):
 	if not is_on_floor() and not climbing:
 		velocity.y -= gravity * delta
 	
-	print(velocity.y)
-	
 	if dead or stunned:
 		return
 	
@@ -114,7 +112,7 @@ func _physics_process(delta):
 	# Handle basic attack
 	if Input.is_action_just_pressed("attack_basic") and not dashing and not climbing:
 		if can_attack:
-			if holding:
+			if holding and is_on_floor():
 				if sprinting:
 					sprinting = false
 				_item_atk()

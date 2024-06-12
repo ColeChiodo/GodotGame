@@ -225,6 +225,7 @@ func _physics_process(delta):
 			body.get_collider().apply_central_impulse(-body.get_normal())
 	
 func _dash():
+	animator.play("dash")
 	$Timers/Dash_Timer.start()
 	sprinting = false
 	can_sprint = false

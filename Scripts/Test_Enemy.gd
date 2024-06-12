@@ -13,6 +13,9 @@ var x_dir = -1
 @onready var chase = $FSM/Chase as EnemyChase
 @onready var attack = $FSM/Attack as EnemyAttack
 @onready var block = $FSM/Block
+@onready var die = $FSM/Die as EnemyDie
+@onready var hit = $FSM/Hit as EnemyHit
+
 
 @onready var animation_player = $AnimationPlayer
 @onready var animator = $AnimatedSprite3D
@@ -23,6 +26,7 @@ var x_dir = -1
 
 # States
 var stunned = false
+var dead = false
 var blocking = false
 var thrown = false
 
@@ -32,14 +36,15 @@ var thrown = false
 func _ready():
 	chase.can_attack.connect(fsm.change_state.bind("Attack"))
 	attack.attack_done.connect(fsm.change_state.bind("Chase"))
+	hit.stun_done.connect(fsm.change_state.bind("Chase"))
 
 func _physics_process(_delta):
 	if x_dir == 1: 
-		$AnimatedSprite3D.flip_h = false
+		$AnimatedSprite3D.flip_h = true
 		for hitbox in hitboxes:
 			hitbox.global_rotation_degrees.y = 0
 	elif x_dir == -1:
-		$AnimatedSprite3D.flip_h = true
+		$AnimatedSprite3D.flip_h = false
 		for hitbox in hitboxes:
 			hitbox.rotation_degrees.y = 180
 	
@@ -62,11 +67,11 @@ func _process(_delta):
 		animator.modulate = Color(1, 1, 1)
 
 func _die():
-	animation_player.play("die")
+	dead = true
+	fsm.change_state("die")
 	
 func _hit(incoming_attack : Attack):
-	animator.stop()
-	animator.play("hit")
+	fsm.change_state("Hit")
 	stunned = true
 	blocking = false
 	$Stun_Timer.wait_time = incoming_attack.atk_stun

@@ -8,12 +8,15 @@ var direction = Vector3()
 signal can_attack
 
 func enter():
+	$"../../AnimationPlayer".stop()
+	$"../../AnimationPlayer".play("RESET")
 	$"../../AnimationPlayer".play("walk")
 	for child in owner.owner.get_children():
 		if child.name == "Player":
 			target = child.global_position
 	
 func update(delta):
+	if owner.dead or owner.stunned: return
 	direction = (owner.nav.get_next_path_position() - owner.global_position).normalized()
 	
 	if direction.x > 0: owner.x_dir = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=156 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=157 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -799,6 +799,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ogaa0"]
 resource_name = "air_atk"
@@ -1246,6 +1258,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="Animation" id="Animation_4tf7r"]
 resource_name = "idle"
@@ -1535,6 +1559,46 @@ tracks/3/keys = {
 "values": [Vector3(0.0610535, 1.0011, 0), Vector3(0.061, 0.906, 0), Vector3(-0.034, 0.906, 0), Vector3(0.046, 0.951, 0), Vector3(0.276, 1.031, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_056i1"]
+resource_name = "dash"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dash"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f6h2l"]
 _data = {
 "RESET": SubResource("Animation_b570e"),
@@ -1547,6 +1611,7 @@ _data = {
 "block": SubResource("Animation_uat50"),
 "climb": SubResource("Animation_p2pmk"),
 "climb_idle": SubResource("Animation_hog6u"),
+"dash": SubResource("Animation_056i1"),
 "death": SubResource("Animation_14xbe"),
 "fall": SubResource("Animation_f6dfl"),
 "grab": SubResource("Animation_o8nfe"),
@@ -1728,6 +1793,7 @@ texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
 animation = &"hit"
 autoplay = "idle"
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

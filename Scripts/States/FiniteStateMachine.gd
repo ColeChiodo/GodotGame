@@ -26,9 +26,7 @@ func change_state(new_name : String):
 		push_error("change_state: new_state " + new_state + " doesn't exist.")
 		return
 	
-	if curr_state:
-		if curr_state.name != new_name:
-			curr_state.exit()
-			new_state.enter()
+	curr_state.exit()
+	new_state.enter()
 	
 	curr_state = new_state

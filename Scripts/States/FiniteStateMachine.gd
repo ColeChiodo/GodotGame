@@ -9,7 +9,7 @@ func _ready():
 	for child in get_children():
 		if child  is State:
 			states[child.name.to_lower()] = child
-			child.state_transition.connect(change_state)
+			child.state_finished.connect(change_state)
 	
 	if init_state:
 		init_state.enter()
@@ -20,6 +20,7 @@ func _process(delta):
 		curr_state.update(delta)
 
 func change_state(new_name : String):
+	print("State: " + new_name)
 	var new_state = states.get(new_name.to_lower())
 	if !new_state:
 		push_error("change_state: new_state " + new_state + " doesn't exist.")

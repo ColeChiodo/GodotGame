@@ -25,6 +25,9 @@ func _ready():
 	hp = max_health
 	
 func _dmg(attack : Attack):
+	if hp <= 0:
+		return
+	
 	if "invulnerable" in owner:
 		if owner.invulnerable:
 			return

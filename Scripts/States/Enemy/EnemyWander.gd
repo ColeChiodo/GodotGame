@@ -15,4 +15,4 @@ func update(delta):
 	
 	direction = (owner.nav.get_next_path_position() - owner.global_position).normalized()
 	
-	owner.linear_velocity = owner.linear_velocity.lerp(direction * 4, 10 * delta)
+	owner.linear_velocity = owner.linear_velocity.lerp(direction * owner.max_speed, owner.acceleration * delta)

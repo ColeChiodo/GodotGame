@@ -319,8 +319,11 @@ func use_special(special):
 	can_attack = true
 
 func _die():
-	dead = true
-	animator.play("death")
+	if not dead:
+		animator.play("death")
+		dead = true
+		print(name + " died")
+	
 
 func _hit(attack : Attack):
 	if dead: return
@@ -335,8 +338,8 @@ func _knockback(attack : Attack):
 	velocity.x = attack.atk_pos * attack.knockback
 	move_and_slide()
 	
-func _blocking(attack : Attack):
-	return blocking if attack.atk_pos != x_dir else false
+func _blocking(dir : int):
+	return blocking if dir != x_dir else false
 
 func _on_timer_timeout():
 	dt_down = false

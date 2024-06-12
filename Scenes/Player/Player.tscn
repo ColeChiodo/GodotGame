@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=156 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="20_3trx3"]
 [ext_resource type="PackedScene" uid="uid://dsfh5eadax5yk" path="res://Scenes/Specials/bash.tscn" id="20_cvqaa"]
 [ext_resource type="Script" path="res://Scripts/CooldownUI.gd" id="22_1hc71"]
+[ext_resource type="PackedScene" uid="uid://ca864t0frv6pf" path="res://Scenes/Components/hurtbox.tscn" id="22_b0smd"]
 [ext_resource type="Script" path="res://Scripts/ThrowRayCast.gd" id="23_6ci5b"]
 [ext_resource type="Script" path="res://Scripts/Stats/PlayerStats.gd" id="24_i34sw"]
 
@@ -1220,7 +1221,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_k6rpl"]
 resource_name = "hit"
-length = 0.3
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1240,10 +1241,10 @@ tracks/1/path = NodePath("AnimatedSprite3D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 4, 4, 4, 4]
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="Animation" id="Animation_4tf7r"]
@@ -1691,6 +1692,9 @@ _data = {
 "throw": SubResource("Animation_wv13l")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_b7peo"]
+size = Vector3(1, 2, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvh00"]
 size = Vector3(2, 2, 1)
 
@@ -1722,9 +1726,8 @@ offset = Vector2(0, 32)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"atk1"
+animation = &"hit"
 autoplay = "idle"
-frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1740,6 +1743,15 @@ libraries = {
 [node name="Health" parent="." instance=ExtResource("9_rihh1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39811, 0)
 max_health = 40.0
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("22_b0smd")]
+collision_layer = 4
+collision_mask = 0
+health = NodePath("../Health")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_b7peo")
 
 [node name="BasicAttack" parent="." instance=ExtResource("17_dbtqv")]
 

@@ -12,6 +12,7 @@ func _process(_delta):
 		var object = get_collider()
 		for child in object.owner.get_children():
 			if child.has_method("_throw") and child.name == "Hurtbox":
+				child.owner.fsm.change_state("Idle")
 				child.owner.global_position.x = grab_pos.global_position.x
 				await get_tree().create_timer(.5).timeout
 				child._throw(owner.x_dir)

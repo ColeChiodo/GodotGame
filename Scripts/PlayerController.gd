@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 @onready var animator = $AnimationPlayer
 @onready var invuln_animation_player = $InvulnAnimations
@@ -85,8 +86,6 @@ func _physics_process(delta):
 	if not is_on_floor() and not climbing:
 		velocity.y -= gravity * delta
 	
-	print(velocity.y)
-	
 	if dead or stunned:
 		return
 	
@@ -114,7 +113,7 @@ func _physics_process(delta):
 	# Handle basic attack
 	if Input.is_action_just_pressed("attack_basic") and not dashing and not climbing:
 		if can_attack:
-			if holding:
+			if holding and is_on_floor():
 				if sprinting:
 					sprinting = false
 				_item_atk()
@@ -227,6 +226,7 @@ func _physics_process(delta):
 			body.get_collider().apply_central_impulse(-body.get_normal())
 	
 func _dash():
+	animator.play("dash")
 	$Timers/Dash_Timer.start()
 	sprinting = false
 	can_sprint = false
@@ -321,8 +321,11 @@ func use_special(special):
 	can_attack = true
 
 func _die():
-	dead = true
-	animator.play("death")
+	if not dead:
+		animator.play("death")
+		dead = true
+		print(name + " died")
+	
 
 func _hit(attack : Attack):
 	if dead: return
@@ -337,8 +340,8 @@ func _knockback(attack : Attack):
 	velocity.x = attack.atk_pos * attack.knockback
 	move_and_slide()
 	
-func _blocking(attack : Attack):
-	return blocking if attack.atk_pos != x_dir else false
+func _blocking(dir : int):
+	return blocking if dir != x_dir else false
 
 func _on_timer_timeout():
 	dt_down = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=157 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="20_3trx3"]
 [ext_resource type="PackedScene" uid="uid://dsfh5eadax5yk" path="res://Scenes/Specials/bash.tscn" id="20_cvqaa"]
 [ext_resource type="Script" path="res://Scripts/CooldownUI.gd" id="22_1hc71"]
+[ext_resource type="PackedScene" uid="uid://ca864t0frv6pf" path="res://Scenes/Components/hurtbox.tscn" id="22_b0smd"]
 [ext_resource type="Script" path="res://Scripts/ThrowRayCast.gd" id="23_6ci5b"]
 [ext_resource type="Script" path="res://Scripts/Stats/PlayerStats.gd" id="24_i34sw"]
 
@@ -798,6 +799,58 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ogaa0"]
+resource_name = "air_atk"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"air_atk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AirAttack/Hitbox:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_4ysk6"]
 resource_name = "atk1"
@@ -833,7 +886,7 @@ tracks/2/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
+"times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -952,7 +1005,7 @@ tracks/2/path = NodePath("BasicAttack/Hitbox:monitoring")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.7),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, true, false, true, false]
@@ -1180,7 +1233,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_k6rpl"]
 resource_name = "hit"
-length = 0.3
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1200,10 +1253,22 @@ tracks/1/path = NodePath("AnimatedSprite3D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 4, 4, 4, 4]
+"values": [0, 1, 2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_4tf7r"]
@@ -1402,6 +1467,46 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 4, 4, 4, 4]
 }
 
+[sub_resource type="Animation" id="Animation_77dsl"]
+resource_name = "sprint_atk"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"sprint_atk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BasicAttack/Hitbox:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
 [sub_resource type="Animation" id="Animation_egc83"]
 resource_name = "walk"
 length = 0.9
@@ -1454,9 +1559,9 @@ tracks/3/keys = {
 "values": [Vector3(0.0610535, 1.0011, 0), Vector3(0.061, 0.906, 0), Vector3(-0.034, 0.906, 0), Vector3(0.046, 0.951, 0), Vector3(0.276, 1.031, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_ogaa0"]
-resource_name = "air_atk"
-length = 0.4
+[sub_resource type="Animation" id="Animation_056i1"]
+resource_name = "dash"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1467,7 +1572,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"air_atk"]
+"values": [&"dash"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -1476,62 +1581,22 @@ tracks/1/path = NodePath("AnimatedSprite3D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0, 1]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AirAttack/Hitbox:monitoring")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-
-[sub_resource type="Animation" id="Animation_77dsl"]
-resource_name = "sprint_atk"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite3D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"sprint_atk"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite3D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("BasicAttack/Hitbox:monitoring")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f6h2l"]
@@ -1546,6 +1611,7 @@ _data = {
 "block": SubResource("Animation_uat50"),
 "climb": SubResource("Animation_p2pmk"),
 "climb_idle": SubResource("Animation_hog6u"),
+"dash": SubResource("Animation_056i1"),
 "death": SubResource("Animation_14xbe"),
 "fall": SubResource("Animation_f6dfl"),
 "grab": SubResource("Animation_o8nfe"),
@@ -1691,11 +1757,13 @@ _data = {
 "throw": SubResource("Animation_wv13l")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_b7peo"]
+size = Vector3(1, 2, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvh00"]
-size = Vector3(1.5, 2, 1)
+size = Vector3(2, 2, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x6l0n"]
-size = Vector3(1, 1.5, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_t2ang"]
 font_size = 30
@@ -1709,7 +1777,6 @@ script/source = "extends Label
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hitboxes")]
 collision_layer = 4
-collision_mask = 9
 script = ExtResource("1_mgauq")
 hitboxes = [NodePath("BasicAttack"), NodePath("All Specials/Bash"), NodePath("GrabMarker"), NodePath("RayCast3D"), NodePath("AirAttack")]
 
@@ -1721,9 +1788,10 @@ shape = SubResource("BoxShape3D_hustl")
 transform = Transform3D(3.69, 0, 0, 0, 3.69, 0, 0, 0, 3.69, 0, 0, 0)
 offset = Vector2(0, 32)
 billboard = 1
-texture_filter = 0
+shaded = true
+texture_filter = 2
 sprite_frames = SubResource("SpriteFrames_cnple")
-animation = &"sprint_atk"
+animation = &"atk4"
 autoplay = "idle"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -1741,13 +1809,22 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39811, 0)
 max_health = 40.0
 
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("22_b0smd")]
+collision_layer = 4
+collision_mask = 0
+health = NodePath("../Health")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_b7peo")
+
 [node name="BasicAttack" parent="." instance=ExtResource("17_dbtqv")]
 
 [node name="Hitbox" parent="BasicAttack" node_paths=PackedStringArray("attack") instance=ExtResource("20_3trx3")]
 attack = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BasicAttack/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
 shape = SubResource("BoxShape3D_cvh00")
 
 [node name="AirAttack" parent="." instance=ExtResource("17_dbtqv")]
@@ -1757,7 +1834,7 @@ monitoring = false
 attack = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AirAttack/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.45, 0)
 shape = SubResource("BoxShape3D_x6l0n")
 
 [node name="SpecialSlot1" type="Node" parent="." node_paths=PackedStringArray("special")]

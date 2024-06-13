@@ -12,7 +12,7 @@ var x_dir = -1
 @onready var wander = $FSM/Wander as EnemyWander
 @onready var chase = $FSM/Chase as EnemyChase
 @onready var attack = $FSM/Attack as EnemyAttack
-@onready var block = $FSM/Block
+@onready var block = $FSM/Block as EnemyBlock
 @onready var die = $FSM/Die as EnemyDie
 @onready var hit = $FSM/Hit as EnemyHit
 
@@ -36,7 +36,8 @@ var thrown = false
 func _ready():
 	chase.can_attack.connect(fsm.change_state.bind("Attack"))
 	attack.attack_done.connect(fsm.change_state.bind("Chase"))
-	hit.stun_done.connect(fsm.change_state.bind("Chase"))
+	hit.stun_done.connect(fsm.change_state.bind("Block"))
+	block.is_safe.connect(fsm.change_state.bind("Chase"))
 
 func _physics_process(_delta):
 	if x_dir == 1: 
@@ -47,6 +48,9 @@ func _physics_process(_delta):
 		$AnimatedSprite3D.flip_h = false
 		for hitbox in hitboxes:
 			hitbox.rotation_degrees.y = 180
+	
+	if blocking:
+		fsm.change_state("Block")
 	
 	if not is_on_floor() and thrown:
 		throw_attack.set_attack(10, 0, 3, .5, 1 if linear_velocity.x > 0 else -1)
@@ -81,7 +85,7 @@ func _throw(dir):
 	if thrown:
 		return
 	thrown = true
-	apply_impulse(Vector3(dir * 2, 2, 0), Vector3())
+	apply_impulse(Vector3(dir * 4, 3, 0), Vector3())
 
 func _knockback(incoming_attack : Attack):
 	apply_impulse(Vector3(incoming_attack.atk_pos * incoming_attack.knockback, 0, 0), Vector3())
@@ -101,3 +105,7 @@ func is_on_floor():
 	if new_velocity == old_velocity:
 		return true
 	old_velocity = linear_velocity.y
+
+func _on_navigation_agent_3d_velocity_computed(safe_velocity):
+	if not thrown and not blocking:
+		linear_velocity = linear_velocity.lerp(safe_velocity, 1)

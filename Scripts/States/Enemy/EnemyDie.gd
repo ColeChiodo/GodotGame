@@ -2,6 +2,7 @@ extends State
 class_name EnemyDie
 
 func enter():
+	owner.nav.set_velocity(Vector3.ZERO)
 	$"../../AnimationPlayer".stop()
 	$"../../AnimationPlayer".play("RESET")
 	$"../../AnimationPlayer".play("die")

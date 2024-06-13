@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://n0m5mbljm4jn"]
+[gd_scene load_steps=52 format=3 uid="uid://n0m5mbljm4jn"]
 
 [ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="1_a1qb2"]
 [ext_resource type="Script" path="res://Scripts/Test_Enemy.gd" id="1_g1f5d"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyChase.gd" id="10_g615k"]
 [ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyAttack.gd" id="11_ked8p"]
 [ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyDie.gd" id="12_6j883"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyBlock.gd" id="12_cfd8w"]
 [ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyHit.gd" id="13_ineci"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_87met"]
@@ -211,7 +210,7 @@ animations = [{
 size = Vector3(2, 2, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vf2jy"]
-size = Vector3(1.5, 2, 1.5)
+size = Vector3(1.5, 1.5, 1)
 
 [sub_resource type="Animation" id="Animation_p16mr"]
 length = 0.001
@@ -502,11 +501,9 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig8ei"]
 size = Vector3(2, 2, 2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_uug8w"]
-size = Vector3(1.5, 2, 1.5)
-
-[node name="Training_Dummy" type="RigidBody3D" node_paths=PackedStringArray("hitboxes")]
-collision_layer = 0
+[node name="Training_Dummy" type="StaticBody3D" node_paths=PackedStringArray("hitboxes")]
+collision_layer = 8
+collision_mask = 9
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
@@ -515,14 +512,8 @@ hitboxes = [NodePath("AttackRange"), NodePath("Hitbox")]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_height_offset = 0.5
-avoidance_enabled = true
-height = 2.0
-radius = 0.25
-max_speed = 3.0
-use_3d_avoidance = true
-avoidance_layers = 8
-avoidance_mask = 8
-debug_enabled = true
+avoidance_layers = 15
+avoidance_mask = 15
 
 [node name="PhysCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 1, 0)
@@ -531,7 +522,6 @@ shape = SubResource("BoxShape3D_87met")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(8.25, 0, 0, 0, 8.25, 0, 0, 0, 8.25, 0, 1, 0)
 billboard = 1
-shaded = true
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_7qtob")
 animation = &"idle"
@@ -605,11 +595,7 @@ attack_range = NodePath("../../AttackRange")
 [node name="Attack" type="Node" parent="FSM"]
 script = ExtResource("11_ked8p")
 
-[node name="Block" type="Node" parent="FSM" node_paths=PackedStringArray("attack_range")]
-script = ExtResource("12_cfd8w")
-attack_range = NodePath("../../AttackRange")
-
-[node name="Block_Timer" type="Timer" parent="FSM/Block"]
+[node name="Block" type="Node" parent="FSM"]
 
 [node name="Die" type="Node" parent="FSM"]
 script = ExtResource("12_6j883")
@@ -623,10 +609,7 @@ collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackRange"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
-shape = SubResource("BoxShape3D_uug8w")
+shape = SubResource("BoxShape3D_vf2jy")
 
-[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Stun_Timer" to="." method="_on_stun_timer_timeout"]
-[connection signal="timeout" from="FSM/Block/Block_Timer" to="FSM/Block" method="_on_block_timer_timeout"]
-[connection signal="area_exited" from="AttackRange" to="FSM/Block" method="_on_attack_range_area_exited"]

@@ -25,7 +25,6 @@ func update(delta):
 	if attack_range.has_overlapping_areas():
 		for body in attack_range.get_overlapping_areas():
 			if body.name == "Hurtbox":
-				print("player entered")
 				can_attack.emit()
 	
 	for child in owner.owner.get_children():
@@ -37,5 +36,5 @@ func update(delta):
 	if owner.nav.is_navigation_finished():
 		return
 	
-	owner.linear_velocity = owner.linear_velocity.lerp(direction * owner.max_speed, owner.acceleration * delta)
+	owner.nav.set_velocity(owner.linear_velocity.lerp(direction * owner.max_speed, owner.acceleration * delta))
 	

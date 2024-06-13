@@ -4,6 +4,7 @@ class_name EnemyAttack
 signal attack_done
 
 func enter():
+	owner.nav.set_velocity(Vector3.ZERO)
 	$"../../Attack".set_attack(5, 0, 10, .6, owner.x_dir)
 	$"../../AnimationPlayer".stop()
 	$"../../AnimationPlayer".play("RESET")
@@ -12,6 +13,7 @@ func enter():
 	attack_done.emit()
 
 func update(_delta):
+	owner.nav.set_velocity(Vector3.ZERO)
 	if owner.dead or owner.stunned:
 		$"../../AnimationPlayer".stop()
 		$"../../AnimationPlayer".play("RESET")

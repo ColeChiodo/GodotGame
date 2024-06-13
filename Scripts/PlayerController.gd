@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 @onready var animator = $AnimationPlayer
 @onready var invuln_animation_player = $InvulnAnimations

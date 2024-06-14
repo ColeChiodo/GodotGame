@@ -71,7 +71,8 @@ func _process(_delta):
 
 func _die():
 	dead = true
-	get_tree().root.get_node("Level").enemy_count -= 1
+	get_tree().root.get_node("SceneManager").get_child(get_tree().root.get_node("SceneManager").get_child_count() - 1).enemy_count -= 1
+	Engine.time_scale = 1
 	fsm.change_state("die")
 	
 func _hit(incoming_attack : Attack):

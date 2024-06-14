@@ -25,10 +25,10 @@
 [ext_resource type="Texture2D" uid="uid://dbgnyhk70uqsn" path="res://Assets/Art/Characters/temp_Knight_player/Dashing_KG_1.png" id="19_yjrh7"]
 [ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="20_3trx3"]
 [ext_resource type="PackedScene" uid="uid://dsfh5eadax5yk" path="res://Scenes/Specials/bash.tscn" id="20_cvqaa"]
-[ext_resource type="Script" path="res://Scripts/CooldownUI.gd" id="22_1hc71"]
 [ext_resource type="PackedScene" uid="uid://ca864t0frv6pf" path="res://Scenes/Components/hurtbox.tscn" id="22_b0smd"]
-[ext_resource type="Script" path="res://Scripts/ThrowRayCast.gd" id="23_6ci5b"]
 [ext_resource type="Script" path="res://Scripts/Stats/PlayerStats.gd" id="24_i34sw"]
+[ext_resource type="Script" path="res://Scripts/Components/ThrowRayCast.gd" id="27_4u1q5"]
+[ext_resource type="Script" path="res://Scripts/UI/CooldownUI.gd" id="29_vlnlq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
 size = Vector3(1, 2, 1.5)
@@ -1859,7 +1859,7 @@ target_position = Vector3(1.27, 0, 0)
 hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
-script = ExtResource("23_6ci5b")
+script = ExtResource("27_4u1q5")
 
 [node name="Timers" type="Node" parent="."]
 
@@ -1903,7 +1903,7 @@ offset_bottom = 242.0
 rotation = -1.5708
 value = 33.5
 show_percentage = false
-script = ExtResource("22_1hc71")
+script = ExtResource("29_vlnlq")
 timer = NodePath("../../Timers/Special1_Timer")
 
 [node name="Label" type="Label" parent="UI"]

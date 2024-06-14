@@ -138,7 +138,7 @@ func _physics_process(delta):
 		animator.play("fall")
 
 	# Handle jump.
-	if (Input.is_action_just_pressed("player_jump") and is_on_floor() and not dashing) or (Input.is_action_pressed("player_jump") and Input.is_action_pressed("move_backward") and climbing):
+	if (Input.is_action_just_pressed("player_jump") and is_on_floor() and not attacking) or (Input.is_action_pressed("player_jump") and Input.is_action_pressed("move_backward") and climbing):
 		velocity.y = JUMP_VELOCITY
 		sprinting = false
 		climbing = false

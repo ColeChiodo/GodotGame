@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Project_R"
-run/main_scene="res://Scenes/Tests/Test_EnemyEncounter.tscn"
+run/main_scene="res://Scenes/Scene_Manager.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/bg_color=Color(0.219501, 0.219501, 0.219501, 1)
 boot_splash/show_image=false

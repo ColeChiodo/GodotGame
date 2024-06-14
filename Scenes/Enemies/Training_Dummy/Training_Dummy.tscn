@@ -1,6 +1,6 @@
 [gd_scene load_steps=55 format=3 uid="uid://n0m5mbljm4jn"]
 
-[ext_resource type="Script" path="res://Scripts/Hurtbox.gd" id="1_a1qb2"]
+[ext_resource type="Script" path="res://Scripts/Components/Hurtbox.gd" id="1_a1qb2"]
 [ext_resource type="Script" path="res://Scripts/Test_Enemy.gd" id="1_g1f5d"]
 [ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="1_yfb20"]
 [ext_resource type="Texture2D" uid="uid://3a1p2nsvsp8h" path="res://Assets/Art/Characters/temp_training_dummy.png" id="2_wwy5w"]

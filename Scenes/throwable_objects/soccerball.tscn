@@ -59,13 +59,13 @@ collision_layer = 0
 mass = 0.32
 physics_material_override = SubResource("PhysicsMaterial_hupky")
 script = ExtResource("1_f27lv")
+obj_name = "soccerball"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 shape = SubResource("SphereShape3D_72hqu")
 
 [node name="Hitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("2_g7tmw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 monitoring = false
 attack = NodePath("../Attack")
 

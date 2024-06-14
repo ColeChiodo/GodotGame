@@ -8,6 +8,8 @@ extends RigidBody3D
 var picked = false
 var can_pick = true
 
+@export var obj_name : String
+
 func _physics_process(_delta):
 	if snapped(linear_velocity.y, 0.001) != 0 and not picked:
 		attack.set_attack(stats.throw_atk, 0, 5, .5, 1 if linear_velocity.x > 0 else -1)
@@ -49,18 +51,16 @@ func _physics_process(_delta):
 		var bodies = $InteractRadius.get_overlapping_bodies()
 		for body in bodies:
 			if body.name == "Player" and get_node("../Player").can_interact:
-				picked = true
-				can_pick = false
-				get_node("../Player").can_interact = false
-				get_node("../Player").holding = true
-				get_node("../Player").stats.item_atk = stats.swing_atk
+				pickup()
 				return
 	
 	if (Input.is_action_just_pressed("player_interact") or Input.is_action_just_pressed("player_block") ) and picked:
 		drop()
+		get_node("..").level_parameters.held_object = null
 		
 	if Input.is_action_just_pressed("player_throw") and picked:
 		throw()
+		get_node("..").level_parameters.held_object = null
 
 func drop():
 	cd_timer.wait_time = 1
@@ -78,6 +78,14 @@ func throw():
 	get_node("../Player").can_interact = true
 	get_node("../Player").holding = false
 	apply_impulse(Vector3(get_node("../Player").x_dir * 3, 1, 0), Vector3())
+
+func pickup():
+	picked = true
+	can_pick = false
+	get_node("../Player").can_interact = false
+	get_node("../Player").holding = true
+	get_node("../Player").stats.item_atk = stats.swing_atk
+	get_node("..").level_parameters.held_object = obj_name
 
 func _on_cooldown_timer_timeout():
 	can_pick = true

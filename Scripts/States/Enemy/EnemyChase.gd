@@ -25,7 +25,7 @@ func update(delta):
 			if body.name == "Hurtbox":
 				can_attack.emit()
 	
-	for child in get_tree().root.get_node("Level").get_children():
+	for child in get_tree().root.get_node("SceneManager").get_child(get_tree().root.get_node("SceneManager").get_child_count() - 1).get_children():
 		if "Player" in child.name:
 			target = child.global_position
 	if target:

@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://28fjbn4f8no2"]
+[gd_scene load_steps=6 format=3 uid="uid://28fjbn4f8no2"]
 
+[ext_resource type="Script" path="res://Scripts/Ladder.gd" id="1_glk74"]
 [ext_resource type="Texture2D" uid="uid://d1h4dy17t5i0y" path="res://Assets/Art/Textures/Grids/Purple/texture_13.png" id="1_qcnd4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aiwsk"]
@@ -20,6 +21,7 @@ uv2_world_triplanar = true
 [node name="Ladder" type="Area3D"]
 collision_layer = 0
 collision_mask = 4
+script = ExtResource("1_glk74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
@@ -29,3 +31,6 @@ shape = SubResource("BoxShape3D_aiwsk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_tui5f")
 surface_material_override/0 = SubResource("StandardMaterial3D_8r54b")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

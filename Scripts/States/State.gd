@@ -10,5 +10,5 @@ func update(_delta):
 	pass
 	
 func exit():
-	print("Exiting " + self.name)
+	pass
 	

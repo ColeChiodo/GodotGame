@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Project_R"
-run/main_scene="res://Scenes/Tests/Test_PlayerController.tscn"
+run/main_scene="res://Scenes/Tests/Test_EnemyEncounter.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/bg_color=Color(0.219501, 0.219501, 0.219501, 1)
 boot_splash/show_image=false
@@ -119,4 +119,4 @@ player_throw={
 3d_physics/layer_2="enemy_hitbox"
 3d_physics/layer_3="player"
 3d_physics/layer_4="Enemy"
-3d_physics/layer_5="Layer 5"
+3d_physics/layer_5="InvisibleWalls"

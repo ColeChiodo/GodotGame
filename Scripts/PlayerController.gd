@@ -11,7 +11,7 @@ class_name Player
 
 @onready var special1_charge_ui = $UI/Label
 
-const SPEED = 5.0
+const SPEED = 3.0
 const DASH = 800
 const JUMP_VELOCITY = 10
 var gravity = 20
@@ -61,6 +61,9 @@ func _ready():
 	special1_charge_ui.text = str(special1_charges)
 
 func _physics_process(delta):
+	if not is_on_floor() and not climbing:
+		velocity.y -= gravity * delta
+		
 	if sprint_atk:
 		velocity.x = x_dir * 6.0
 		move_and_slide()
@@ -83,10 +86,8 @@ func _physics_process(delta):
 	if on_ladder and is_on_floor() and Input.is_action_pressed("move_backward"):
 		climbing = false
 	
-	if not is_on_floor() and not climbing:
-		velocity.y -= gravity * delta
-	
 	if dead or stunned:
+		move_and_slide()
 		return
 	
 	# Handle blocking
@@ -297,7 +298,8 @@ func _air_atk():
 	$Timers/Action_Timer.start()
 
 func use_special(special):
-	if special1_charges == 0:
+	if special1_charges <= 0:
+		special1_charges = 0
 		return
 	
 	attacking = true
@@ -315,6 +317,8 @@ func use_special(special):
 		$Timers/Special1_Timer.start()
 		
 	special1_charges -= 1
+	if special1_charges <= 0:
+		special1_charges = 0
 	special1_charge_ui.text = str(special1_charges)
 	
 	attacking = false
@@ -329,6 +333,8 @@ func _die():
 
 func _hit(attack : Attack):
 	if dead: return
+	if is_on_floor():
+		velocity = Vector3.ZERO
 	animator.stop()
 	animator.play("hit")
 	stunned = true
@@ -377,12 +383,3 @@ func _on_special_1_timer_timeout():
 func _on_action_timer_timeout():
 	attacking = false
 	can_attack = true
-
-func _on_ladder_body_entered(body : CharacterBody3D):
-	if "Player" in body.name:
-		on_ladder = true
-
-func _on_ladder_body_exited(body : CharacterBody3D):
-	if "Player" in body.name:
-		on_ladder = false
-		climbing = false

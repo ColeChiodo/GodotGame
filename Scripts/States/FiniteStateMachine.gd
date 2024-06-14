@@ -4,6 +4,8 @@ class_name FiniteStateMachine
 var states : Dictionary = {}
 var curr_state : State
 @export var init_state : State
+@onready var debug_state = $"../DebugState"
+
 
 func _ready():
 	for child in get_children():
@@ -17,10 +19,10 @@ func _ready():
 
 func _process(delta):
 	if curr_state:
+		debug_state.text = curr_state.name
 		curr_state.update(delta)
 
 func change_state(new_name : String):
-	print("State: " + new_name)
 	var new_state = states.get(new_name.to_lower())
 	if !new_state:
 		push_error("change_state: new_state " + new_state + " doesn't exist.")

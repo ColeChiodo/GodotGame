@@ -38,6 +38,7 @@ func _ready():
 	attack.attack_done.connect(fsm.change_state.bind("Chase"))
 	hit.stun_done.connect(fsm.change_state.bind("Block"))
 	block.is_safe.connect(fsm.change_state.bind("Chase"))
+	idle.player_close.connect(fsm.change_state.bind("Chase"))
 
 func _physics_process(_delta):
 	if x_dir == 1: 
@@ -66,12 +67,11 @@ func _process(_delta):
 	elif blocking:
 		animator.modulate = Color(.1, .1, 1)
 	else:
-		if always_block:
-			blocking = true
 		animator.modulate = Color(1, 1, 1)
 
 func _die():
 	dead = true
+	get_tree().root.get_node("Level").enemy_count -= 1
 	fsm.change_state("die")
 	
 func _hit(incoming_attack : Attack):
@@ -98,14 +98,14 @@ func _on_animation_player_animation_finished(_anim_name):
 
 func _on_stun_timer_timeout():
 	stunned = false
-
-var old_velocity = 0
+	
+@onready var floor_check = $floor_check
 func is_on_floor():
-	var new_velocity = linear_velocity.y
-	if new_velocity == old_velocity:
+	if floor_check.is_colliding():
 		return true
-	old_velocity = linear_velocity.y
+	return false
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	if not thrown and not blocking:
 		linear_velocity = linear_velocity.lerp(safe_velocity, 1)
+		linear_velocity.y = 0 if is_on_floor() else -7

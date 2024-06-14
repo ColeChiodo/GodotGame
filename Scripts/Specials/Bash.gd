@@ -5,11 +5,9 @@ extends Special
 @export var duration : float
 @export var animation_player : AnimationPlayer
 @export var can_use_in_air = true
+@export var cd : float
 
 var active = false
-
-func _init():
-	cooldown = 3
 
 func activate():
 	active = true

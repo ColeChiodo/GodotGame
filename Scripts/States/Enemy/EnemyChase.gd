@@ -3,6 +3,7 @@ class_name EnemyChase
 
 var direction = Vector3()
 @onready var target : Vector3
+@onready var par = owner.owner
 @export var attack_range : Area3D
 
 signal can_attack
@@ -11,9 +12,6 @@ func enter():
 	$"../../AnimationPlayer".stop()
 	$"../../AnimationPlayer".play("RESET")
 	$"../../AnimationPlayer".play("walk")
-	for child in owner.owner.get_children():
-		if child.name == "Player":
-			target = child.global_position
 	
 func update(delta):
 	if owner.dead or owner.stunned: return
@@ -27,7 +25,7 @@ func update(delta):
 			if body.name == "Hurtbox":
 				can_attack.emit()
 	
-	for child in owner.owner.get_children():
+	for child in get_tree().root.get_node("Level").get_children():
 		if "Player" in child.name:
 			target = child.global_position
 	if target:

@@ -5,7 +5,7 @@ signal attack_done
 
 func enter():
 	owner.nav.set_velocity(Vector3.ZERO)
-	$"../../Attack".set_attack(5, 0, 10, .6, owner.x_dir)
+	$"../../Attack".set_attack(5, 0, 10, .7, owner.x_dir)
 	$"../../AnimationPlayer".stop()
 	$"../../AnimationPlayer".play("RESET")
 	$"../../AnimationPlayer".play("atk1")

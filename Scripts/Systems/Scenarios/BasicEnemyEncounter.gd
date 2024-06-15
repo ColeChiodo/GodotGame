@@ -1,14 +1,21 @@
 extends Node3D
 class_name EnemyEncounter
 
+@onready var portal_points = $PortalPoints
 @onready var enemy_spawn_points = $EnemySpawnPoints
+@onready var player = $Player
 
 @export var enemy_pool = [
 	preload("res://Scenes/Enemies/Training_Dummy/Training_Dummy.tscn")
 ]
 
+@export var portal_pool = [
+	preload("res://Scenes/Portals/debug_portal.tscn"),
+	preload("res://Scenes/Portals/enemy_portal.tscn")
+]
+
 var level_parameters := {
-	"player_hp": 0,
+	"player_hp": null,
 	"held_object": null
 }
 
@@ -31,17 +38,32 @@ var enemy_count : int = 0
 signal end_encounter
 
 func _ready():
-	for spawn_point in enemy_spawn_points.get_children():
-		var spawn_here = randi_range(0, 1)
-		if not spawn_here:
-			continue
-		var enemy_index = randi_range(0, enemy_pool.size() - 1)
-		var enemy = enemy_pool[enemy_index].instantiate()
-		enemy.position = spawn_point.position
-		self.add_child(enemy)
-		enemy_count += 1
+	if not level_parameters.player_hp:
+		level_parameters.player_hp = player.get_node("Health").max_health
+		
+	if enemy_spawn_points:
+		for spawn_point in enemy_spawn_points.get_children():
+			var spawn_here = randi_range(0, 1)
+			if not spawn_here:
+				continue
+			var enemy_index = randi_range(0, enemy_pool.size() - 1)
+			var enemy = enemy_pool[enemy_index].instantiate()
+			enemy.position = spawn_point.position
+			self.add_child(enemy)
+			enemy_count += 1
 	
 
-func _physics_process(_delta):
-	if enemy_count == 0:
-		end_encounter.emit()
+func goto_encounter(type : String):
+	emit_signal("end_encounter", type)
+
+var can_spawn_portals = true
+func _process(_delta):
+	if max_instanced_enemy_count and can_spawn_portals:
+		if enemy_count == 0:
+			if portal_points:
+				for portal_point in portal_points.get_children():
+					var i = randi_range(0, portal_pool.size() - 1)
+					var portal = portal_pool[i].instantiate()
+					portal.position = portal_point.global_position
+					self.add_child(portal)
+				can_spawn_portals = false

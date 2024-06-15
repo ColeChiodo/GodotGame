@@ -13,12 +13,12 @@
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[sub_resource type="Sky" id="Sky_3wn5h"]
+[sub_resource type="Sky" id="Sky_q75ia"]
 sky_material = SubResource("ProceduralSkyMaterial_ms6rj")
 
 [sub_resource type="Environment" id="Environment_xe8sb"]
 background_mode = 2
-sky = SubResource("Sky_3wn5h")
+sky = SubResource("Sky_q75ia")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -3016,7 +3016,6 @@ script = ExtResource("2_o7fkl")
 
 [node name="Player" parent="." instance=ExtResource("3_6vwqg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
-collision_mask = 17
 
 [node name="EnemySpawnPoints" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
@@ -3061,6 +3060,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -3)
 
 [node name="Marker3D15" type="Marker3D" parent="EnemySpawnPoints"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 3)
+
+[node name="PortalPoints" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)
+
+[node name="Marker3D" type="Marker3D" parent="PortalPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+
+[node name="Marker3D2" type="Marker3D" parent="PortalPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
 
 [node name="Crowbar" parent="." instance=ExtResource("5_5jikm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, -3)

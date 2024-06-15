@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3tdjisl25wup"]
+
+[ext_resource type="Script" path="res://Scripts/Systems/Portal.gd" id="1_wnamy"]
+[ext_resource type="Texture2D" uid="uid://dj030qh8g2ej1" path="res://Assets/Art/temp_Icons/14/Skillicon14_32.png" id="2_kw8es"]
+
+[sub_resource type="Animation" id="Animation_8spfw"]
+resource_name = "flash"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 3.24901),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.301961)]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 3, 0, 1, 1, 0, 1.5, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fda8j"]
+_data = {
+"flash": SubResource("Animation_8spfw")
+}
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kjjcx"]
+top_radius = 0.1
+bottom_radius = 0.25
+height = 0.25
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1fyx3"]
+size = Vector3(3, 3, 3)
+
+[node name="DebugPortal" type="Node3D"]
+script = ExtResource("1_wnamy")
+type = "SceneManager"
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(7.67, 0, 0, 0, 7.67, 0, 0, 0, 7.67, 0, 3, 0)
+billboard = 1
+texture_filter = 0
+texture = ExtResource("2_kw8es")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D"]
+libraries = {
+"": SubResource("AnimationLibrary_fda8j")
+}
+autoplay = "flash"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+mesh = SubResource("CylinderMesh_kjjcx")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_1fyx3")

@@ -1777,6 +1777,7 @@ script/source = "extends Label
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hitboxes")]
 collision_layer = 4
+collision_mask = 17
 script = ExtResource("1_mgauq")
 hitboxes = [NodePath("BasicAttack"), NodePath("All Specials/Bash"), NodePath("GrabMarker"), NodePath("RayCast3D"), NodePath("AirAttack")]
 

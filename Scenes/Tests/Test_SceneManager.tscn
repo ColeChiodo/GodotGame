@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qiknlj4qyy53"]
+[gd_scene load_steps=18 format=3 uid="uid://qiknlj4qyy53"]
 
 [ext_resource type="Script" path="res://Scripts/Systems/Scenarios/BasicEnemyEncounter.gd" id="1_7u8pb"]
 [ext_resource type="Texture2D" uid="uid://deyxcm7dgaxvf" path="res://Assets/Art/Textures/Grids/Light/texture_07.png" id="1_a8oyt"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://n7gqmawnwaa8" path="res://Scenes/Player/Player.tscn" id="3_1kexp"]
 [ext_resource type="PackedScene" uid="uid://dao3n8ssk2p1a" path="res://Scenes/Portals/enemy_portal.tscn" id="5_yhba0"]
 [ext_resource type="PackedScene" uid="uid://d3tdjisl25wup" path="res://Scenes/Portals/debug_portal.tscn" id="6_b4qp3"]
+[ext_resource type="PackedScene" uid="uid://c1xttrfomh6bk" path="res://Scenes/Portals/elite_portal.tscn" id="7_21gf1"]
+[ext_resource type="PackedScene" uid="uid://dgciwlg2vy76u" path="res://Scenes/Portals/shop_portal.tscn" id="8_jcy4n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qoju0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -2996,13 +2998,19 @@ shape = SubResource("WorldBoundaryShape3D_i7xtu")
 transform = Transform3D(1, 0, 0, 0, 0.951057, 0.309017, 0, -0.309017, 0.951057, 0, 20, 50)
 projection = 1
 current = true
-fov = 90.4
 size = 10.922
 script = ExtResource("2_jqm4l")
 
 [node name="Player" parent="." instance=ExtResource("3_1kexp")]
 
 [node name="EnemyPortal" parent="." instance=ExtResource("5_yhba0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
 [node name="DebugPortal" parent="." instance=ExtResource("6_b4qp3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -2)
+
+[node name="ElitePortal" parent="." instance=ExtResource("7_21gf1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="ShopPortal" parent="." instance=ExtResource("8_jcy4n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)

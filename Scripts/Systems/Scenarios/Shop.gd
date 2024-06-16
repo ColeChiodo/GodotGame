@@ -1,13 +1,8 @@
 extends Node3D
-class_name EnemyEncounter
+class_name ShopEncounter
 
 @onready var portal_points = $PortalPoints
-@onready var enemy_spawn_points = $EnemySpawnPoints
 @onready var player = $Player
-
-@export var enemy_pool = [
-	preload("res://Scenes/Enemies/Training_Dummy/Training_Dummy.tscn")
-]
 
 @export var portal_pool = [
 	#preload("res://Scenes/Portals/debug_portal.tscn"),
@@ -16,9 +11,7 @@ class_name EnemyEncounter
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
-	preload("res://Scenes/Portals/elite_portal.tscn"),
-	preload("res://Scenes/Portals/shop_portal.tscn"),
-	preload("res://Scenes/Portals/shop_portal.tscn")
+	preload("res://Scenes/Portals/elite_portal.tscn")
 ]
 
 var level_parameters := {
@@ -39,38 +32,19 @@ func load_level_parameters(new_level_parameters : Dictionary):
 		held_object.pickup()
 	print("\n----------------------------------------\n")
 
-var enemy_count : int = 0
-@export var max_instanced_enemy_count : int = 5
-
 signal end_encounter
 
 func _ready():
 	if not level_parameters.player_hp:
 		level_parameters.player_hp = player.get_node("Health").max_health
 		
-	if enemy_spawn_points:
-		for spawn_point in enemy_spawn_points.get_children():
-			var spawn_here = randi_range(0, 1)
-			if not spawn_here:
-				continue
-			var enemy_index = randi_range(0, enemy_pool.size() - 1)
-			var enemy = enemy_pool[enemy_index].instantiate()
-			enemy.position = spawn_point.position
-			self.add_child(enemy)
-			enemy_count += 1
+	if portal_points:
+		for portal_point in portal_points.get_children():
+			var i = randi_range(0, portal_pool.size() - 1)
+			var portal = portal_pool[i].instantiate()
+			portal.position = portal_point.global_position
+			self.add_child(portal)
 	
 
 func goto_encounter(type : String):
 	emit_signal("end_encounter", type)
-
-var can_spawn_portals = true
-func _process(_delta):
-	if max_instanced_enemy_count and can_spawn_portals:
-		if enemy_count == 0:
-			if portal_points:
-				for portal_point in portal_points.get_children():
-					var i = randi_range(0, portal_pool.size() - 1)
-					var portal = portal_pool[i].instantiate()
-					portal.position = portal_point.global_position
-					self.add_child(portal)
-				can_spawn_portals = false

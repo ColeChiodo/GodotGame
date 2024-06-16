@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2uq8nw5valpn"]
+[gd_scene load_steps=7 format=3 uid="uid://c2uq8nw5valpn"]
 
 [ext_resource type="Script" path="res://Scripts/Systems/SceneSwitcher.gd" id="1_bn6so"]
+[ext_resource type="Script" path="res://Scripts/Stats/RunStats.gd" id="2_5kemr"]
 [ext_resource type="PackedScene" uid="uid://qiknlj4qyy53" path="res://Scenes/Tests/Test_SceneManager.tscn" id="2_s2m7o"]
 
 [sub_resource type="Animation" id="Animation_ci6ie"]
@@ -55,6 +56,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
+
+[node name="RunStats" type="Node" parent="."]
+script = ExtResource("2_5kemr")
 
 [node name="Level" parent="." instance=ExtResource("2_s2m7o")]
 

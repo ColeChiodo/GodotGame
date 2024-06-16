@@ -1,11 +1,16 @@
 extends Node3D
-class_name EnemyEncounter
+class_name EliteEncounter
 
 @onready var portal_points = $PortalPoints
 @onready var enemy_spawn_points = $EnemySpawnPoints
+@onready var elite_spawn_points = $EliteSpawnPoints
 @onready var player = $Player
 
 @export var enemy_pool = [
+	preload("res://Scenes/Enemies/Training_Dummy/Training_Dummy.tscn")
+]
+
+@export var elite_pool = [
 	preload("res://Scenes/Enemies/Training_Dummy/Training_Dummy.tscn")
 ]
 
@@ -16,7 +21,7 @@ class_name EnemyEncounter
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
-	preload("res://Scenes/Portals/elite_portal.tscn"),
+	preload("res://Scenes/Portals/shop_portal.tscn"),
 	preload("res://Scenes/Portals/shop_portal.tscn"),
 	preload("res://Scenes/Portals/shop_portal.tscn")
 ]
@@ -55,6 +60,18 @@ func _ready():
 				continue
 			var enemy_index = randi_range(0, enemy_pool.size() - 1)
 			var enemy = enemy_pool[enemy_index].instantiate()
+			enemy.position = spawn_point.position
+			self.add_child(enemy)
+			
+			# Remove when real elite class is made
+			enemy.get_node("Health").hp = 50
+			
+			enemy_count += 1
+	
+	if elite_spawn_points:
+		for spawn_point in elite_spawn_points.get_children():
+			var enemy_index = randi_range(0, elite_pool.size() - 1)
+			var enemy = elite_pool[enemy_index].instantiate()
 			enemy.position = spawn_point.position
 			self.add_child(enemy)
 			enemy_count += 1

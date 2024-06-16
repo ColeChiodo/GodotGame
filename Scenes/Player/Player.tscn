@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=160 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -29,6 +29,7 @@
 [ext_resource type="Script" path="res://Scripts/Stats/PlayerStats.gd" id="24_i34sw"]
 [ext_resource type="Script" path="res://Scripts/Components/ThrowRayCast.gd" id="27_4u1q5"]
 [ext_resource type="Script" path="res://Scripts/UI/CooldownUI.gd" id="29_vlnlq"]
+[ext_resource type="Script" path="res://Scripts/UI/RespawnButton.gd" id="30_3lo5l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
 size = Vector3(1, 2, 1.5)
@@ -1775,6 +1776,26 @@ script/source = "extends Label
 
 "
 
+[sub_resource type="Animation" id="Animation_8ckrb"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6t0at"]
+_data = {
+"fade_out": SubResource("Animation_8ckrb")
+}
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hitboxes")]
 collision_layer = 4
 collision_mask = 17
@@ -1918,6 +1939,39 @@ label_settings = SubResource("LabelSettings_t2ang")
 horizontal_alignment = 1
 script = SubResource("GDScript_52qa5")
 
+[node name="RespawnButton" type="Button" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -373.0
+offset_top = -102.0
+offset_right = 373.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Respawn"
+script = ExtResource("30_3lo5l")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="UI/RespawnButton"]
+
+[node name="ColorRect" type="ColorRect" parent="UI/RespawnButton/CanvasLayer"]
+modulate = Color(0, 0, 0, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/RespawnButton"]
+libraries = {
+"": SubResource("AnimationLibrary_6t0at")
+}
+
 [connection signal="timeout" from="Timers/Stun_Timer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="Timers/Dash_Timer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Timers/DT_Timer" to="." method="_on_timer_timeout"]
@@ -1925,3 +1979,5 @@ script = SubResource("GDScript_52qa5")
 [connection signal="timeout" from="Timers/Invuln_Timer" to="." method="_on_invuln_timer_timeout"]
 [connection signal="timeout" from="Timers/Chain_Atk_Timer" to="." method="_on_chain_atk_timer_timeout"]
 [connection signal="timeout" from="Timers/Action_Timer" to="." method="_on_action_timer_timeout"]
+[connection signal="pressed" from="UI/RespawnButton" to="UI/RespawnButton" method="_on_pressed"]
+[connection signal="animation_finished" from="UI/RespawnButton/AnimationPlayer" to="UI/RespawnButton" method="_on_animation_player_animation_finished"]

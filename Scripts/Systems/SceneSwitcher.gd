@@ -8,6 +8,7 @@ var type : String
 
 func _ready():
 	curr_level.end_encounter.connect(handle_level_change)
+	animator.play("fade_in")
 
 func handle_level_change(new_type : String):
 	type = new_type
@@ -27,3 +28,4 @@ func _on_animation_player_animation_finished(anim_name):
 			curr_level = next_level
 			next_level = null
 			animator.play("fade_in")
+			$RunStats.curr_floor += 1

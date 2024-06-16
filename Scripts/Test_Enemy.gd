@@ -76,6 +76,9 @@ func _die():
 	fsm.change_state("die")
 	
 func _hit(incoming_attack : Attack):
+	Engine.time_scale = .1
+	await get_tree().create_timer(.015).timeout
+	Engine.time_scale = 1
 	fsm.change_state("Hit")
 	stunned = true
 	blocking = false
@@ -94,8 +97,9 @@ func _knockback(incoming_attack : Attack):
 func _blocking(dir : int):
 	return blocking if dir != x_dir else false
 
-func _on_animation_player_animation_finished(_anim_name):
-	queue_free()
+func _on_animation_player_animation_finished(anim_name):
+	if "die" in anim_name:
+		queue_free()
 
 func _on_stun_timer_timeout():
 	stunned = false

@@ -328,7 +328,10 @@ func _die():
 	if not dead:
 		animator.play("death")
 		dead = true
-		print(name + " died")
+		
+		velocity = Vector3.ZERO
+		
+		$UI/RespawnButton.visible = true
 	
 
 func _hit(attack : Attack):

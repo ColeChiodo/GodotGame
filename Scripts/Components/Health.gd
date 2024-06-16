@@ -48,7 +48,7 @@ func _dmg(attack : Attack):
 		owner.owner.level_parameters.player_hp = hp
 	DamageNumbers.display_number("-", dmg_taken, origin.global_position, crit)
 	print(str(owner.name) + " has been hit for " + str(dmg_taken) + ".\nHP: " + str(hp))
-	if parent.has_method("_hit"):
+	if hp > 0 and parent.has_method("_hit"):
 		parent._hit(attack)
 	if hp <= 0:
 		parent._die()

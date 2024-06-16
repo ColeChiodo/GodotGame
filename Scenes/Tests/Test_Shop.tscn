@@ -1,13 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://d4ebomj3castl"]
+[gd_scene load_steps=14 format=3 uid="uid://wpfgjak2airp"]
 
-[ext_resource type="Script" path="res://Scripts/Systems/Scenarios/BasicEnemyEncounter.gd" id="1_numel"]
-[ext_resource type="Texture2D" uid="uid://deyxcm7dgaxvf" path="res://Assets/Art/Textures/Grids/Light/texture_07.png" id="1_xs15i"]
-[ext_resource type="Script" path="res://Scripts/Camera.gd" id="2_o7fkl"]
-[ext_resource type="PackedScene" uid="uid://n7gqmawnwaa8" path="res://Scenes/Player/Player.tscn" id="3_6vwqg"]
-[ext_resource type="PackedScene" uid="uid://bijtctw2sp5d" path="res://Scenes/throwable_objects/crowbar.tscn" id="5_5jikm"]
-[ext_resource type="PackedScene" uid="uid://bfwwuw8eab5rn" path="res://Scenes/throwable_objects/soccerball.tscn" id="6_024eq"]
-[ext_resource type="PackedScene" uid="uid://28fjbn4f8no2" path="res://Scenes/ladder.tscn" id="7_gyfn3"]
-[ext_resource type="Texture2D" uid="uid://d24x6frb6t00t" path="res://Assets/Art/Textures/Grids/Green/texture_01.png" id="7_hmj4b"]
+[ext_resource type="Script" path="res://Scripts/Systems/Scenarios/Shop.gd" id="1_xk1n3"]
+[ext_resource type="Texture2D" uid="uid://deyxcm7dgaxvf" path="res://Assets/Art/Textures/Grids/Light/texture_07.png" id="2_esh5c"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="3_iabh8"]
+[ext_resource type="PackedScene" uid="uid://n7gqmawnwaa8" path="res://Scenes/Player/Player.tscn" id="4_wuurh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ms6rj"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -30,7 +26,7 @@ agent_radius = 1.3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wx2ar"]
 albedo_color = Color(0.791999, 0.791999, 0.791999, 1)
-albedo_texture = ExtResource("1_xs15i")
+albedo_texture = ExtResource("2_esh5c")
 rim = 0.05
 rim_tint = 1.0
 clearcoat_enabled = true
@@ -48,21 +44,8 @@ uv2_world_triplanar = true
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_83ui1"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrugx"]
-albedo_texture = ExtResource("7_hmj4b")
-uv1_triplanar = true
-uv1_world_triplanar = true
-uv2_triplanar = true
-uv2_world_triplanar = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_ksx6y"]
-size = Vector3(3, 3, 3)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ug5qu"]
-data = PackedVector3Array(-1.5, 1.5, 1.5, 1.5, 1.5, 1.5, -1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5, -1.5, 1.5, -1.5, -1.5, 1.5, 1.5, 1.5, -1.5, -1.5, 1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, 1.5, -1.5, 1.5, -1.5, -1.5, 1.5, -1.5, 1.5, -1.5, 1.5, -1.5, -1.5, 1.5, 1.5, -1.5, -1.5, -1.5, -1.5, 1.5, 1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 1.5, 1.5, -1.5, 1.5, 1.5, 1.5, 1.5, -1.5, -1.5, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, 1.5, 1.5, -1.5, -1.5, -1.5, -1.5, -1.5)
-
 [node name="Level" type="Node3D"]
-script = ExtResource("1_numel")
+script = ExtResource("1_xk1n3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xe8sb")
@@ -3007,61 +2990,18 @@ transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 
 shape = SubResource("WorldBoundaryShape3D_83ui1")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.951057, 0.309017, 0, -0.309017, 0.951057, -13, 20, 50)
+transform = Transform3D(1, 0, 0, 0, 0.951057, 0.309017, 0, -0.309017, 0.951057, -4, 20, 50)
 projection = 1
 current = true
+fov = 90.4
 size = 10.922
-script = ExtResource("2_o7fkl")
+script = ExtResource("3_iabh8")
 
-[node name="Player" parent="." instance=ExtResource("3_6vwqg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
-
-[node name="EnemySpawnPoints" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
-
-[node name="Marker3D" type="Marker3D" parent="EnemySpawnPoints"]
-
-[node name="Marker3D3" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
-
-[node name="Marker3D2" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-
-[node name="Marker3D4" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
-
-[node name="Marker3D5" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
-
-[node name="Marker3D6" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
-
-[node name="Marker3D7" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -3)
-
-[node name="Marker3D8" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 3)
-
-[node name="Marker3D9" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -3)
-
-[node name="Marker3D10" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 3)
-
-[node name="Marker3D11" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
-
-[node name="Marker3D13" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 3)
-
-[node name="Marker3D14" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -3)
-
-[node name="Marker3D15" type="Marker3D" parent="EnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 3)
+[node name="Player" parent="." instance=ExtResource("4_wuurh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
 
 [node name="PortalPoints" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 
 [node name="Marker3D" type="Marker3D" parent="PortalPoints"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
@@ -3069,21 +3009,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
 [node name="Marker3D2" type="Marker3D" parent="PortalPoints"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
 
-[node name="Crowbar" parent="." instance=ExtResource("5_5jikm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, -3)
-
-[node name="SoccerBall" parent="." instance=ExtResource("6_024eq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 2)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5, -3)
-material_override = SubResource("StandardMaterial3D_nrugx")
-mesh = SubResource("BoxMesh_ksx6y")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_ug5qu")
-
-[node name="Ladder" parent="." instance=ExtResource("7_gyfn3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -1.45)
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
+text = "SHOP"
+font_size = 587

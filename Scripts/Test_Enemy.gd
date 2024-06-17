@@ -15,7 +15,7 @@ var x_dir = -1
 @onready var block = $FSM/Block as EnemyBlock
 @onready var die = $FSM/Die as EnemyDie
 @onready var hit = $FSM/Hit as EnemyHit
-
+@onready var throwns = $FSM/Thrown as EnemyThrown
 
 @onready var animation_player = $AnimationPlayer
 @onready var animator = $AnimatedSprite3D
@@ -52,14 +52,6 @@ func _physics_process(_delta):
 	
 	if blocking:
 		fsm.change_state("Block")
-	
-	if not is_on_floor() and thrown:
-		throw_attack.set_attack(10, 0, 3, .5, 1 if linear_velocity.x > 0 else -1)
-		throw_active.play("active")
-	else:
-		thrown = false
-		throw_active.stop()
-		throw_active.play("RESET")
 
 func _process(_delta):
 	if stunned:
@@ -73,23 +65,27 @@ func _die():
 	dead = true
 	get_tree().root.get_node("SceneManager").get_child(get_tree().root.get_node("SceneManager").get_child_count() - 1).enemy_count -= 1
 	Engine.time_scale = 1
-	fsm.change_state("die")
+	fsm.change_state("Die")
 	
 func _hit(incoming_attack : Attack):
+	$Stun_Timer.wait_time = incoming_attack.atk_stun
+	$Stun_Timer.start()
+	stunned = true
+	fsm.change_state("Hit")
 	Engine.time_scale = .1
 	await get_tree().create_timer(.015).timeout
 	Engine.time_scale = 1
-	fsm.change_state("Hit")
 	stunned = true
 	blocking = false
-	$Stun_Timer.wait_time = incoming_attack.atk_stun
-	$Stun_Timer.start()
+	
 
+var throw_dir
 func _throw(dir):
+	throw_dir = dir
 	if thrown:
 		return
 	thrown = true
-	apply_impulse(Vector3(dir * 4, 3, 0), Vector3())
+	fsm.change_state("Thrown")
 
 func _knockback(incoming_attack : Attack):
 	apply_impulse(Vector3(incoming_attack.atk_pos * incoming_attack.knockback, 0, 0), Vector3())
@@ -101,9 +97,6 @@ func _on_animation_player_animation_finished(anim_name):
 	if "die" in anim_name:
 		queue_free()
 
-func _on_stun_timer_timeout():
-	stunned = false
-	
 @onready var floor_check = $floor_check
 func is_on_floor():
 	if floor_check.is_colliding():
@@ -113,4 +106,9 @@ func is_on_floor():
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	if not thrown and not blocking:
 		linear_velocity = linear_velocity.lerp(safe_velocity, 1)
-		linear_velocity.y = 0 if is_on_floor() else -7
+		linear_velocity.y = 0 if is_on_floor() and not thrown else -7
+
+func _on_stun_timer_timeout():
+	stunned = false
+	thrown = false
+	nav.avoidance_enabled = true

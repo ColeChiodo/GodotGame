@@ -58,6 +58,7 @@ _data = {
 collision_layer = 0
 mass = 0.32
 physics_material_override = SubResource("PhysicsMaterial_hupky")
+continuous_cd = true
 script = ExtResource("1_f27lv")
 obj_name = "soccerball"
 

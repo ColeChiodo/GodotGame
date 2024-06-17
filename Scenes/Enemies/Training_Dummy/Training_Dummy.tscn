@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://n0m5mbljm4jn"]
+[gd_scene load_steps=56 format=3 uid="uid://n0m5mbljm4jn"]
 
 [ext_resource type="Script" path="res://Scripts/Components/Hurtbox.gd" id="1_a1qb2"]
 [ext_resource type="Script" path="res://Scripts/Test_Enemy.gd" id="1_g1f5d"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyDie.gd" id="12_6j883"]
 [ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyBlock.gd" id="12_cfd8w"]
 [ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyHit.gd" id="13_ineci"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyThrown.gd" id="15_v7rdp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_87met"]
 size = Vector3(1, 1.125, 1)
@@ -520,11 +521,11 @@ hitboxes = [NodePath("AttackRange"), NodePath("Hitbox")]
 path_height_offset = 0.5
 avoidance_enabled = true
 height = 2.0
-radius = 1.0
 max_speed = 1.5
 use_3d_avoidance = true
 avoidance_layers = 8
 avoidance_mask = 8
+debug_enabled = true
 
 [node name="PhysCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 1, 0)
@@ -618,6 +619,9 @@ script = ExtResource("12_6j883")
 
 [node name="Hit" type="Node" parent="FSM"]
 script = ExtResource("13_ineci")
+
+[node name="Thrown" type="Node" parent="FSM"]
+script = ExtResource("15_v7rdp")
 
 [node name="AgroRange" type="Area3D" parent="."]
 collision_layer = 4

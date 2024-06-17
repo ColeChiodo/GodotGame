@@ -55,6 +55,7 @@ _data = {
 [node name="Crowbar" type="RigidBody3D"]
 collision_layer = 0
 mass = 0.5
+continuous_cd = true
 script = ExtResource("1_07vd0")
 obj_name = "crowbar"
 

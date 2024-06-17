@@ -12,6 +12,9 @@ func enter():
 	$"../../AnimationPlayer".stop()
 	$"../../AnimationPlayer".play("RESET")
 	$"../../AnimationPlayer".play("walk")
+	owner.thrown = false
+	owner.throw_active.stop()
+	owner.throw_active.play("RESET")
 	
 func update(delta):
 	if owner.dead or owner.stunned: return

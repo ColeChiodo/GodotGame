@@ -48,23 +48,28 @@ func _ready():
 	if not level_parameters.player_hp:
 		level_parameters.player_hp = player.get_node("Health").max_health
 		
-	if enemy_spawn_points:
-		for spawn_point in enemy_spawn_points.get_children():
-			var spawn_here = randi_range(0, 1)
-			if not spawn_here:
-				continue
-			var enemy_index = randi_range(0, enemy_pool.size() - 1)
-			var enemy = enemy_pool[enemy_index].instantiate()
-			enemy.position = spawn_point.position
-			self.add_child(enemy)
-			enemy_count += 1
 	
 
 func goto_encounter(type : String):
 	emit_signal("end_encounter", type)
 
+var initialized = false
 var can_spawn_portals = true
 func _process(_delta):
+	if not initialized:
+		if enemy_spawn_points:
+			for spawn_point in enemy_spawn_points.get_children():
+				var spawn_here = randi_range(0, 100)
+				if spawn_here <= (80 - (get_parent().get_node("RunStats").curr_level * 2)): # Rate to spawn enemy. Base 20 + 2 * LevelCount
+					continue
+				var enemy_index = randi_range(0, enemy_pool.size() - 1)
+				var enemy = enemy_pool[enemy_index].instantiate()
+				enemy.position = spawn_point.global_position
+				self.add_child(enemy)
+				enemy.name = "Enemy"
+				enemy_count += 1
+		initialized = true
+	
 	if max_instanced_enemy_count and can_spawn_portals:
 		if enemy_count == 0:
 			if portal_points:

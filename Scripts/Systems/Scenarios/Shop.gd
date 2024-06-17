@@ -16,20 +16,33 @@ class_name ShopEncounter
 
 var level_parameters := {
 	"player_hp": null,
-	"held_object": null
+	"held_object": null,
+	"held_items": null,
+	
 }
 
 func load_level_parameters(new_level_parameters : Dictionary):
 	print("\n------- Loading Level Parameters -------\n")
 	level_parameters = new_level_parameters
+	
 	self.get_node("Player/Health").hp = level_parameters.player_hp
 	print("Player Health set to " + str(level_parameters.player_hp))
+	
 	if level_parameters.held_object:
 		print("Was holding " + level_parameters.held_object)
 		var held_object = load("res://Scenes/throwable_objects/" + level_parameters.held_object.to_lower() + ".tscn").instantiate()
 		add_child(held_object)
 		held_object.name = "held_object"
 		held_object.pickup()
+	
+	if level_parameters.held_items:
+		self.get_node("Player/HeldItems").items = level_parameters.held_items
+		self.get_node("Player/Stats").special1_max_charges = 1 + level_parameters.held_items["special1_charge_up"]
+		self.get_node("Player").special1_charges = self.get_node("Player/Stats").special1_max_charges
+		print(self.get_node("Player").special1_charges)
+		self.get_node("Player").special1_charge_ui.text = str(self.get_node("Player").special1_charges)
+		print(level_parameters.held_items)
+	
 	print("\n----------------------------------------\n")
 
 signal end_encounter

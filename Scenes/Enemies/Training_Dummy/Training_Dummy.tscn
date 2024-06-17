@@ -525,7 +525,6 @@ max_speed = 1.5
 use_3d_avoidance = true
 avoidance_layers = 8
 avoidance_mask = 8
-debug_enabled = true
 
 [node name="PhysCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 1, 0)

@@ -8,6 +8,8 @@ class_name Player
 @onready var air_attack = $AirAttack
 @onready var sp_slot_1 = $SpecialSlot1
 @onready var stats = $Stats
+@onready var held_items = $HeldItems
+
 
 @onready var special1_charge_ui = $UI/Label
 
@@ -225,7 +227,17 @@ func _physics_process(delta):
 		var body = get_slide_collision(count)
 		if body.get_collider() is RigidBody3D:
 			body.get_collider().apply_central_impulse(-body.get_normal())
+
+func _process(_delta):
+	if special1_charge_ui.text != str(special1_charges):
+		special1_charge_ui.text = str(special1_charges)
 	
+	var old_special1_max = stats.special1_max_charges
+	stats.special1_max_charges = 1 + held_items.items["special1_charge_up"]
+	if old_special1_max < stats.special1_max_charges:
+		special1_charges += 1
+		special1_charge_ui.text = str(special1_charges)
+
 func _dash():
 	animator.play("dash")
 	$Timers/Dash_Timer.start()

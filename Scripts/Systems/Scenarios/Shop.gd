@@ -18,6 +18,7 @@ var level_parameters := {
 	"player_hp": null,
 	"held_object": null,
 	"held_items": null,
+	"player_money": null,
 	
 }
 
@@ -27,6 +28,9 @@ func load_level_parameters(new_level_parameters : Dictionary):
 	
 	self.get_node("Player/Health").hp = level_parameters.player_hp
 	print("Player Health set to " + str(level_parameters.player_hp))
+	
+	self.get_node("Player/HeldItems").money = level_parameters.player_money
+	print("Player gold: " + str(level_parameters.player_money))
 	
 	if level_parameters.held_object:
 		print("Was holding " + level_parameters.held_object)

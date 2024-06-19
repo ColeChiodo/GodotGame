@@ -1,4 +1,4 @@
-[gd_scene load_steps=161 format=3 uid="uid://n7gqmawnwaa8"]
+[gd_scene load_steps=164 format=3 uid="uid://n7gqmawnwaa8"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_mgauq"]
 [ext_resource type="Texture2D" uid="uid://bo1g5ty4tosfo" path="res://Assets/Art/Characters/temp_Knight_player/Idle_KG_1.png" id="2_6vj8q"]
@@ -31,6 +31,8 @@
 [ext_resource type="Script" path="res://Scripts/Components/HeldItems.gd" id="29_axe46"]
 [ext_resource type="Script" path="res://Scripts/UI/CooldownUI.gd" id="29_vlnlq"]
 [ext_resource type="Script" path="res://Scripts/UI/RespawnButton.gd" id="30_3lo5l"]
+[ext_resource type="Texture2D" uid="uid://bnr6wrpt6isnp" path="res://Assets/Art/temp_Icons/1/Skillicon1_12.png" id="31_gtog3"]
+[ext_resource type="Script" path="res://Scripts/UI/MoneyDisplay.gd" id="32_bj7hw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hustl"]
 size = Vector3(1, 2, 1.5)
@@ -1767,16 +1769,6 @@ size = Vector3(2, 2, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x6l0n"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_t2ang"]
-font_size = 30
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="GDScript" id="GDScript_52qa5"]
-script/source = "extends Label
-
-"
-
 [sub_resource type="Animation" id="Animation_8ckrb"]
 resource_name = "fade_out"
 tracks/0/type = "value"
@@ -1796,6 +1788,21 @@ tracks/0/keys = {
 _data = {
 "fade_out": SubResource("Animation_8ckrb")
 }
+
+[sub_resource type="LabelSettings" id="LabelSettings_t2ang"]
+font_size = 30
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_52qa5"]
+script/source = "extends Label
+
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_nnyhe"]
+font_size = 30
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hitboxes")]
 collision_layer = 4
@@ -1920,29 +1927,6 @@ anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="ProgressBar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("timer")]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 142.0
-offset_right = 153.0
-offset_bottom = 242.0
-rotation = -1.5708
-value = 33.5
-show_percentage = false
-script = ExtResource("29_vlnlq")
-timer = NodePath("../../Timers/Special1_Timer")
-
-[node name="Label" type="Label" parent="UI"]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 145.0
-offset_right = 150.0
-offset_bottom = 187.0
-text = "50"
-label_settings = SubResource("LabelSettings_t2ang")
-horizontal_alignment = 1
-script = SubResource("GDScript_52qa5")
-
 [node name="RespawnButton" type="Button" parent="UI"]
 visible = false
 layout_mode = 1
@@ -1961,9 +1945,11 @@ text = "Respawn"
 script = ExtResource("30_3lo5l")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="UI/RespawnButton"]
+layer = 50
 
 [node name="ColorRect" type="ColorRect" parent="UI/RespawnButton/CanvasLayer"]
 modulate = Color(0, 0, 0, 0)
+z_index = 50
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1975,6 +1961,50 @@ color = Color(0, 0, 0, 1)
 libraries = {
 "": SubResource("AnimationLibrary_6t0at")
 }
+
+[node name="ProgressBar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("timer")]
+z_index = -1
+layout_mode = 0
+offset_left = 53.0
+offset_top = 142.0
+offset_right = 153.0
+offset_bottom = 242.0
+rotation = -1.5708
+value = 33.5
+show_percentage = false
+script = ExtResource("29_vlnlq")
+timer = NodePath("../../Timers/Special1_Timer")
+
+[node name="Label" type="Label" parent="UI"]
+z_index = -1
+layout_mode = 0
+offset_left = 58.0
+offset_top = 145.0
+offset_right = 150.0
+offset_bottom = 187.0
+text = "999"
+label_settings = SubResource("LabelSettings_t2ang")
+horizontal_alignment = 1
+script = SubResource("GDScript_52qa5")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI"]
+z_index = -1
+texture_filter = 1
+position = Vector2(1816, 92)
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("31_gtog3")
+
+[node name="Label2" type="Label" parent="UI"]
+z_index = -1
+layout_mode = 0
+offset_left = 1770.0
+offset_top = 145.0
+offset_right = 1862.0
+offset_bottom = 187.0
+text = "999"
+label_settings = SubResource("LabelSettings_nnyhe")
+horizontal_alignment = 1
+script = ExtResource("32_bj7hw")
 
 [connection signal="timeout" from="Timers/Stun_Timer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="Timers/Dash_Timer" to="." method="_on_dash_timer_timeout"]

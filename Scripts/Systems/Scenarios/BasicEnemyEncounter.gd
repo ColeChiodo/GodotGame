@@ -32,6 +32,7 @@ var level_parameters := {
 	"player_hp": null,
 	"held_object": null,
 	"held_items": null,
+	"player_money": null,
 	
 }
 
@@ -41,6 +42,9 @@ func load_level_parameters(new_level_parameters : Dictionary):
 	
 	self.get_node("Player/Health").hp = level_parameters.player_hp
 	print("Player Health set to " + str(level_parameters.player_hp))
+	
+	self.get_node("Player/HeldItems").money = level_parameters.player_money
+	print("Player gold: " + str(level_parameters.player_money))
 	
 	if level_parameters.held_object:
 		print("Was holding " + level_parameters.held_object)
@@ -60,13 +64,16 @@ func load_level_parameters(new_level_parameters : Dictionary):
 	print("\n----------------------------------------\n")
 
 var enemy_count : int = 0
-@export var max_instanced_enemy_count : int = 5
+var total_enemy_count : int = 0
 
 signal end_encounter
 
 func _ready():
 	if not level_parameters.player_hp:
 		level_parameters.player_hp = player.get_node("Health").max_health
+	
+	if not level_parameters.player_money:
+		level_parameters.player_money = player.get_node("HeldItems").money
 	
 func goto_encounter(type : String):
 	emit_signal("end_encounter", type)
@@ -78,7 +85,7 @@ func _process(_delta):
 		if enemy_spawn_points:
 			for spawn_point in enemy_spawn_points.get_children():
 				var spawn_here = randi_range(0, 100)
-				if spawn_here <= (80 - (get_parent().get_node("RunStats").curr_level * 2)): # Rate to spawn enemy. Base 20 + 2 * LevelCount
+				if spawn_here <= 20:
 					continue
 				var enemy_index = randi_range(0, enemy_pool.size() - 1)
 				var enemy = enemy_pool[enemy_index].instantiate()
@@ -86,20 +93,23 @@ func _process(_delta):
 				self.add_child(enemy)
 				enemy.name = "Enemy"
 				enemy_count += 1
+			total_enemy_count = enemy_count
 		initialized = true
 	
-	if max_instanced_enemy_count and can_spawn_portals:
+	if can_spawn_portals:
 		if enemy_count == 0:
 			if portal_points:
 				for portal_point in portal_points.get_children():
-					var i = randi_range(0, portal_pool.size() - 1)
-					var portal = portal_pool[i].instantiate()
+					var portal_index = randi_range(0, portal_pool.size() - 1)
+					var portal = portal_pool[portal_index].instantiate()
 					portal.position = portal_point.global_position
 					self.add_child(portal)
 				
-				var i = randi_range(0, item_pool.size() - 1)
-				var item = item_pool[i].instantiate()
+				var item_index = randi_range(0, item_pool.size() - 1)
+				var item = item_pool[item_index].instantiate()
 				item.position = portal_points.global_position
 				self.add_child(item)
 				
 				can_spawn_portals = false
+			if total_enemy_count:
+				self.get_node("Player/HeldItems").give_money(total_enemy_count)

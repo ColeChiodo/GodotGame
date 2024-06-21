@@ -18,7 +18,7 @@ func _on_area_3d_body_entered(body):
 			self.queue_free()
 		else:
 			if body.get_node("HeldItems").money >= price:
-				body.get_node("HeldItems").money -= price
+				body.get_node("HeldItems").take_money(price)
 				body.get_node("HeldItems").pickup(item_name)
 				
 				var sold_out = load("res://Scenes/Items/item_sold_out.tscn").instantiate()

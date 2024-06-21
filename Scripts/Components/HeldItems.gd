@@ -25,4 +25,4 @@ func take_money(val : int):
 
 func _process(_delta):
 	if Input.is_action_just_pressed("debug_money"):
-		money += 1
+		give_money(25)

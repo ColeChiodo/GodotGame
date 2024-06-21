@@ -22,3 +22,7 @@ func take_money(val : int):
 	money -= val
 	if "Player" in owner.name:
 		owner.owner.level_parameters.player_money = money
+
+func _process(_delta):
+	if Input.is_action_just_pressed("debug_money"):
+		money += 1

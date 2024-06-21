@@ -2,6 +2,7 @@ extends Node3D
 class_name ShopEncounter
 
 @onready var portal_points = $PortalPoints
+@onready var shop_items = $ShopItems
 @onready var player = $Player
 
 @export var portal_pool = [
@@ -12,6 +13,11 @@ class_name ShopEncounter
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
 	preload("res://Scenes/Portals/enemy_portal.tscn"),
 	preload("res://Scenes/Portals/elite_portal.tscn")
+]
+
+@export var item_pool = [
+	preload("res://Scenes/Items/special1_charge_up.tscn"),
+	
 ]
 
 var level_parameters := {
@@ -57,10 +63,18 @@ func _ready():
 		
 	if portal_points:
 		for portal_point in portal_points.get_children():
-			var i = randi_range(0, portal_pool.size() - 1)
-			var portal = portal_pool[i].instantiate()
+			var portal_index = randi_range(0, portal_pool.size() - 1)
+			var portal = portal_pool[portal_index].instantiate()
 			portal.position = portal_point.global_position
 			self.add_child(portal)
+	
+	if shop_items:
+		for point in shop_items.get_children():
+			var item_index = randi_range(0, item_pool.size() - 1)
+			var item = item_pool[item_index].instantiate()
+			item.position = point.global_position
+			self.add_child(item)
+			item.is_shop_item = true
 	
 
 func goto_encounter(type : String):

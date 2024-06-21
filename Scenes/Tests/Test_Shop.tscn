@@ -3009,7 +3009,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
 [node name="Marker3D2" type="Marker3D" parent="PortalPoints"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
 
-[node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
-text = "SHOP"
-font_size = 587
+[node name="ShopItems" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="ShopItems"]

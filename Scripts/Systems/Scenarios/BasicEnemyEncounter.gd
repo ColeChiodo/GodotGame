@@ -113,3 +113,6 @@ func _process(_delta):
 				can_spawn_portals = false
 			if total_enemy_count:
 				self.get_node("Player/HeldItems").give_money(total_enemy_count)
+				Engine.time_scale = .1
+				await get_tree().create_timer(.2).timeout
+				Engine.time_scale = 1

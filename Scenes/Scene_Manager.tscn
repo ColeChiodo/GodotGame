@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Systems/SceneSwitcher.gd" id="1_bn6so"]
 [ext_resource type="Script" path="res://Scripts/Stats/RunStats.gd" id="2_5kemr"]
-[ext_resource type="PackedScene" uid="uid://qiknlj4qyy53" path="res://Scenes/Tests/Test_SceneManager.tscn" id="2_s2m7o"]
+[ext_resource type="PackedScene" uid="uid://w65m1c1f62s5" path="res://Scenes/Levels/HubWorld.tscn" id="3_1ofyl"]
 
 [sub_resource type="Animation" id="Animation_ci6ie"]
 resource_name = "fade_in"
@@ -60,6 +60,6 @@ color = Color(0, 0, 0, 0)
 [node name="RunStats" type="Node" parent="."]
 script = ExtResource("2_5kemr")
 
-[node name="Level" parent="." instance=ExtResource("2_s2m7o")]
+[node name="Level" parent="." instance=ExtResource("3_1ofyl")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

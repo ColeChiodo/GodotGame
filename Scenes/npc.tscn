@@ -1,0 +1,235 @@
+[gd_scene load_steps=29 format=3 uid="uid://1oywwhk4lu0h"]
+
+[ext_resource type="Script" path="res://Scripts/NPC.gd" id="1_u8kqf"]
+[ext_resource type="Texture2D" uid="uid://3a1p2nsvsp8h" path="res://Assets/Art/Characters/temp_training_dummy.png" id="2_vsi88"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rrvr8"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twsdv"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70caw"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j24yp"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ts5r"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40wtd"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(128, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjl07"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pivvr"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(192, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6i70"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(224, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_du7nk"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_er6ts"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wygue"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmw82"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tj4fb"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(128, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncnwx"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hm1m"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(192, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs6et"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(224, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ee60"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61hny"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptxhi"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0cbq"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_octmg"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f07tb"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wqu1"]
+atlas = ExtResource("2_vsi88")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mkgia"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twsdv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70caw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j24yp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ts5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40wtd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjl07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pivvr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6i70")
+}],
+"loop": true,
+"name": &"atk1",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"block",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_du7nk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_er6ts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wygue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmw82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tj4fb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ncnwx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hm1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs6et")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ee60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61hny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptxhi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0cbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_octmg")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f07tb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wqu1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_clbmt"]
+size = Vector3(2.5, 2, 2.5)
+
+[node name="NPC" type="RigidBody3D"]
+collision_layer = 0
+script = ExtResource("1_u8kqf")
+dialogue = Array[String](["Hello", "How Are You?", "Poggers!"])
+
+[node name="PhysCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_rrvr8")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(8.25, 0, 0, 0, 8.25, 0, 0, 0, 8.25, 0, 1, 0)
+billboard = 1
+shaded = true
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_mkgia")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="InteractArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_clbmt")
+
+[node name="DialogueBox" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0.25)
+text = "TEST"
+font_size = 80
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

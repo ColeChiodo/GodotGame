@@ -640,7 +640,6 @@ shape = SubResource("BoxShape3D_uug8w")
 
 [node name="DebugState" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 0.25)
-visible = false
 
 [node name="floor_check" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

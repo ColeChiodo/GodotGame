@@ -1,101 +1,101 @@
 [gd_scene load_steps=29 format=3 uid="uid://1oywwhk4lu0h"]
 
-[ext_resource type="Script" path="res://Scripts/NPC.gd" id="1_u8kqf"]
-[ext_resource type="Texture2D" uid="uid://3a1p2nsvsp8h" path="res://Assets/Art/Characters/temp_training_dummy.png" id="2_vsi88"]
+[ext_resource type="Script" path="res://Scripts/NPC.gd" id="1_ymlta"]
+[ext_resource type="Texture2D" uid="uid://3a1p2nsvsp8h" path="res://Assets/Art/Characters/temp_training_dummy.png" id="2_s6it0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rrvr8"]
 size = Vector3(1, 2, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twsdv"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70caw"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j24yp"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ts5r"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_40wtd"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(128, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjl07"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(160, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pivvr"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(192, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c6i70"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(224, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_du7nk"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_er6ts"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wygue"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fmw82"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tj4fb"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(128, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncnwx"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(160, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4hm1m"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(192, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xs6et"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(224, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ee60"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_61hny"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ptxhi"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x0cbq"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_octmg"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(128, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f07tb"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5wqu1"]
-atlas = ExtResource("2_vsi88")
+atlas = ExtResource("2_s6it0")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mkgia"]
@@ -200,7 +200,7 @@ size = Vector3(2.5, 2, 2.5)
 
 [node name="NPC" type="RigidBody3D"]
 collision_layer = 0
-script = ExtResource("1_u8kqf")
+script = ExtResource("1_ymlta")
 dialogue = Array[String](["Hello", "How Are You?", "Poggers!"])
 
 [node name="PhysCollider" type="CollisionShape3D" parent="."]

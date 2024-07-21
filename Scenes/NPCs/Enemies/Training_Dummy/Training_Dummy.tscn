@@ -1,114 +1,114 @@
 [gd_scene load_steps=56 format=3 uid="uid://n0m5mbljm4jn"]
 
-[ext_resource type="Script" path="res://Scripts/Components/Hurtbox.gd" id="1_a1qb2"]
-[ext_resource type="Script" path="res://Scripts/Test_Enemy.gd" id="1_g1f5d"]
-[ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="1_yfb20"]
-[ext_resource type="Texture2D" uid="uid://3a1p2nsvsp8h" path="res://Assets/Art/Characters/temp_training_dummy.png" id="2_wwy5w"]
-[ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="5_taldb"]
-[ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="6_5y58s"]
-[ext_resource type="Script" path="res://Scripts/States/FiniteStateMachine.gd" id="7_ekqbq"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyIdle.gd" id="8_7kivt"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyWander.gd" id="9_52q5m"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyChase.gd" id="10_g615k"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyAttack.gd" id="11_ked8p"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyDie.gd" id="12_6j883"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyBlock.gd" id="12_cfd8w"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyHit.gd" id="13_ineci"]
-[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyThrown.gd" id="15_v7rdp"]
+[ext_resource type="Script" path="res://Scripts/Test_Enemy.gd" id="1_5271f"]
+[ext_resource type="Texture2D" uid="uid://3a1p2nsvsp8h" path="res://Assets/Art/Characters/temp_training_dummy.png" id="2_dp6ie"]
+[ext_resource type="PackedScene" uid="uid://ckipaj0b774sn" path="res://Scenes/Components/health.tscn" id="3_0xjkc"]
+[ext_resource type="Script" path="res://Scripts/Components/Hurtbox.gd" id="4_jr52m"]
+[ext_resource type="PackedScene" uid="uid://dlhrwma6jj0j5" path="res://Scenes/Components/attack.tscn" id="5_csbjd"]
+[ext_resource type="PackedScene" uid="uid://bxcmk5rwcpf0a" path="res://Scenes/Components/hitbox.tscn" id="6_7us3f"]
+[ext_resource type="Script" path="res://Scripts/States/FiniteStateMachine.gd" id="7_2oavp"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyIdle.gd" id="8_68pda"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyWander.gd" id="9_nan2q"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyChase.gd" id="10_sdsqo"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyAttack.gd" id="11_fm5x6"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyBlock.gd" id="12_5yp4c"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyDie.gd" id="13_smv5l"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyHit.gd" id="14_82lwn"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/EnemyThrown.gd" id="15_ghfy3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_87met"]
 size = Vector3(1, 1.125, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twsdv"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70caw"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j24yp"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ts5r"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_40wtd"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(128, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjl07"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(160, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pivvr"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(192, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c6i70"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(224, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_du7nk"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_er6ts"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wygue"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fmw82"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tj4fb"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(128, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncnwx"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(160, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4hm1m"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(192, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xs6et"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(224, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ee60"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_61hny"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ptxhi"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x0cbq"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_octmg"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(128, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f07tb"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5wqu1"]
-atlas = ExtResource("2_wwy5w")
+atlas = ExtResource("2_dp6ie")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7qtob"]
@@ -514,7 +514,7 @@ collision_layer = 0
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-script = ExtResource("1_g1f5d")
+script = ExtResource("1_5271f")
 hitboxes = [NodePath("AttackRange"), NodePath("Hitbox")]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
@@ -540,7 +540,7 @@ animation = &"idle"
 autoplay = "idle"
 frame = 1
 
-[node name="Health" parent="." instance=ExtResource("1_yfb20")]
+[node name="Health" parent="." instance=ExtResource("3_0xjkc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15395, 0)
 max_health = 30.0
 
@@ -548,16 +548,16 @@ max_health = 30.0
 collision_layer = 0
 collision_mask = 2
 monitoring = false
-script = ExtResource("1_a1qb2")
+script = ExtResource("4_jr52m")
 health = NodePath("../Health")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_pow1i")
 
-[node name="Attack" parent="." instance=ExtResource("5_taldb")]
+[node name="Attack" parent="." instance=ExtResource("5_csbjd")]
 
-[node name="Hitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("6_5y58s")]
+[node name="Hitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("6_7us3f")]
 collision_mask = 4
 monitoring = false
 attack = NodePath("../Attack")
@@ -576,9 +576,9 @@ libraries = {
 "": SubResource("AnimationLibrary_dswae")
 }
 
-[node name="ThrowAttack" parent="." instance=ExtResource("5_taldb")]
+[node name="ThrowAttack" parent="." instance=ExtResource("5_csbjd")]
 
-[node name="ThrowHitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("6_5y58s")]
+[node name="ThrowHitbox" parent="." node_paths=PackedStringArray("attack") instance=ExtResource("6_7us3f")]
 collision_layer = 2
 monitoring = false
 attack = NodePath("../ThrowAttack")
@@ -591,36 +591,36 @@ shape = SubResource("BoxShape3D_ig8ei")
 one_shot = true
 
 [node name="FSM" type="Node" parent="." node_paths=PackedStringArray("init_state")]
-script = ExtResource("7_ekqbq")
+script = ExtResource("7_2oavp")
 init_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="FSM"]
-script = ExtResource("8_7kivt")
+script = ExtResource("8_68pda")
 
 [node name="Wander" type="Node" parent="FSM"]
-script = ExtResource("9_52q5m")
+script = ExtResource("9_nan2q")
 
 [node name="Chase" type="Node" parent="FSM" node_paths=PackedStringArray("attack_range")]
-script = ExtResource("10_g615k")
+script = ExtResource("10_sdsqo")
 attack_range = NodePath("../../AttackRange")
 
 [node name="Attack" type="Node" parent="FSM"]
-script = ExtResource("11_ked8p")
+script = ExtResource("11_fm5x6")
 
 [node name="Block" type="Node" parent="FSM" node_paths=PackedStringArray("attack_range")]
-script = ExtResource("12_cfd8w")
+script = ExtResource("12_5yp4c")
 attack_range = NodePath("../../AttackRange")
 
 [node name="Block_Timer" type="Timer" parent="FSM/Block"]
 
 [node name="Die" type="Node" parent="FSM"]
-script = ExtResource("12_6j883")
+script = ExtResource("13_smv5l")
 
 [node name="Hit" type="Node" parent="FSM"]
-script = ExtResource("13_ineci")
+script = ExtResource("14_82lwn")
 
 [node name="Thrown" type="Node" parent="FSM"]
-script = ExtResource("15_v7rdp")
+script = ExtResource("15_ghfy3")
 
 [node name="AgroRange" type="Area3D" parent="."]
 collision_layer = 4

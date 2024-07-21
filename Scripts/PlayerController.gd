@@ -53,6 +53,8 @@ var can_interact = true
 var on_ladder = false
 var climbing = false
 
+var chatting = false
+
 # Double tap direction to dash
 var dt_left = false
 var dt_right = false
@@ -90,6 +92,10 @@ func _physics_process(delta):
 	
 	if dead or stunned:
 		move_and_slide()
+		return
+	
+	if chatting:
+		animator.play("idle")
 		return
 	
 	# Handle blocking

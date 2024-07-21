@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="2_w1ush"]
 [ext_resource type="PackedScene" uid="uid://n7gqmawnwaa8" path="res://Scenes/Player/Player.tscn" id="3_nbk21"]
 [ext_resource type="PackedScene" uid="uid://dao3n8ssk2p1a" path="res://Scenes/Portals/enemy_portal.tscn" id="4_wi8sy"]
-[ext_resource type="PackedScene" uid="uid://1oywwhk4lu0h" path="res://Scenes/npc.tscn" id="5_sij1k"]
+[ext_resource type="PackedScene" uid="uid://1oywwhk4lu0h" path="res://Scenes/NPCs/npc.tscn" id="5_sij1k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qubar"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -3004,5 +3004,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
 [node name="NPC" parent="." instance=ExtResource("5_sij1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
 interactable = true
+textbox_type = "POPUP"
 
 [node name="Player" parent="." instance=ExtResource("3_nbk21")]
+
+[node name="NPC2" parent="." instance=ExtResource("5_sij1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+interactable = true

@@ -6,7 +6,7 @@ class_name EnemyEncounter
 @onready var player = $Player
 
 @export var enemy_pool = [
-	preload("res://Scenes/Enemies/Training_Dummy/Training_Dummy.tscn"),
+	preload("res://Scenes/NPCs/Enemies/Training_Dummy/Training_Dummy.tscn"),
 	
 ]
 
